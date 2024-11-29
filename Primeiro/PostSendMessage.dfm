@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 319
-  ClientWidth = 516
+  ClientHeight = 416
+  ClientWidth = 901
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -42,12 +42,32 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 248
-    Top = 123
+    Left = 568
+    Top = 16
     Width = 129
     Height = 33
     Caption = 'consome Json'
     TabOrder = 3
     OnClick = Button2Click
+  end
+  object lbTitulo: TcxLabel
+    Left = 592
+    Top = 93
+    Caption = 'lbTitulo'
+  end
+  object lbTexto1: TcxLabel
+    Left = 568
+    Top = 116
+    Caption = 'cxLabel1'
+  end
+  object lbTexto2: TcxLabel
+    Left = 568
+    Top = 130
+    Caption = 'cxLabel1'
+  end
+  object lbTexto3: TcxLabel
+    Left = 568
+    Top = 153
+    Caption = 'cxLabel1'
   end
 end
