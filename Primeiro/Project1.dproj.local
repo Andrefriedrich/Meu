@@ -3,8 +3,8 @@
 	<Transactions>
     <Transaction>2024/09/12 20:38:21.000.553,=C:\Users\andre\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
     <Transaction>2024/09/12 20:39:30.000.452,=C:\Users\andre\Documents\Embarcadero\Studio\Projects\Unit2.pas</Transaction>
-    <Transaction>2024/09/12 21:14:57.000.836,C:\Users\andre\Documents\Embarcadero\Studio\Projects\Unit1.dfm=C:\Users\andre\Documents\Embarcadero\Studio\Projects\PostSendMessage.dfm</Transaction>
-    <Transaction>2024/09/12 21:14:57.000.836,C:\Users\andre\Documents\Embarcadero\Studio\Projects\Unit1.pas=C:\Users\andre\Documents\Embarcadero\Studio\Projects\PostSendMessage.pas</Transaction>
+    <Transaction>2024/09/12 21:14:57.000.836,C:\Users\andre\Documents\Embarcadero\Studio\Projects\PostSendMessage.pas=C:\Users\andre\Documents\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2024/09/12 21:14:57.000.836,C:\Users\andre\Documents\Embarcadero\Studio\Projects\PostSendMessage.dfm=C:\Users\andre\Documents\Embarcadero\Studio\Projects\Unit1.dfm</Transaction>
     <Transaction>2024/09/12 21:15:15.000.718,C:\Users\andre\Documents\Embarcadero\Studio\Projects\Project1.dproj=C:\Users\andre\Documents\Embarcadero\Studio\Projects\Project1.dproj</Transaction>
   </Transactions>
 </BorlandProject>

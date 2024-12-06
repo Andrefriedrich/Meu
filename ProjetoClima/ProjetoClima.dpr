@@ -3,15 +3,15 @@ program ProjetoClima;
 uses
   Vcl.Forms,
   FrmPrincipal in 'src\Forms\FrmPrincipal.pas' {Form1},
-  HTTPClient in 'src\Data\HTTPClient.pas',
-  OpenWeatherAPI in 'src\Data\OpenWeatherAPI.pas',
-  URLBuilderOpenWeather in 'src\Data\URLBuilderOpenWeather.pas';
+  WeatherRequestThread in 'src\Data\WeatherRequestThread.pas',
+  WeatherController in 'src\Data\WeatherController.pas',
+  WeatherModel in 'src\Data\WeatherModel.pas';
 
 {$R *.res}
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TFormPrincipal, FormPrincipal);
   Application.Run;
 end.

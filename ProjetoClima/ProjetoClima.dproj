@@ -102,9 +102,9 @@
             <Form>Form1</Form>
             <FormType>dfm</FormType>
         </DCCReference>
-        <DCCReference Include="src\Data\HTTPClient.pas"/>
-        <DCCReference Include="src\Data\OpenWeatherAPI.pas"/>
-        <DCCReference Include="src\Data\URLBuilderOpenWeather.pas"/>
+        <DCCReference Include="src\Data\WeatherRequestThread.pas"/>
+        <DCCReference Include="src\Data\WeatherController.pas"/>
+        <DCCReference Include="src\Data\WeatherModel.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>
