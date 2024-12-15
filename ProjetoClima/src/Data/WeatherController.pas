@@ -14,19 +14,14 @@ type
 
 implementation
 
-uses
-  Grijjy.Bson.Serialization,grijjy.Bson.IO ,Rest.Json;
-
-{ TWeatherController }
-
 function TWeatherController.ParseWithGrijjy(const Json: string): TWeatherModel;
 begin
-  Result := TJson.JsonToObject<TWeatherModel>(Json);
+  Result := TWeatherModel.Create(Json);
 end;
 
 function TWeatherController.ParseWithRestJson(const Json: string): TWeatherModel;
 begin
-  Result := TJson.JsonToObject<TWeatherModel>(Json);
+  Result := TWeatherModel.Create(Json);
 end;
 
 end.

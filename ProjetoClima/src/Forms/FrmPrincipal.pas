@@ -12,25 +12,17 @@ uses
 
 type
   TFormPrincipal = class(TForm)
-    cbLanguage: TcxComboBox;
-    cbLatitude: TcxTextEdit;
     edCidade: TcxTextEdit;
-    cxLabel1: TcxLabel;
-    lbLatitude: TcxLabel;
-    lbLongitude: TcxLabel;
-    lbUnidade: TcxLabel;
-    cbUnidade: TcxComboBox;
-    btnSaveJson: TcxButton;
-    StaticText1: TStaticText;
+    btnApagar: TcxButton;
     memResultado: TcxMemo;
-    btnFetchRestJson: TcxButton;
-    btnFetchGrijjy: TcxButton;
-    procedure btnFetchGrijjyClick(Sender: TObject);
-    procedure btnFetchRestJsonClick(Sender: TObject);
-    procedure btnSaveJSONClick(Sender: TObject);
+    btnBuscaComRestJson: TcxButton;
+    btnBuscaComGrijjy: TcxButton;
+    procedure btnBuscaComGrijjyClick(Sender: TObject);
+    procedure btnBuscaComRestJsonClick(Sender: TObject);
+    procedure btnApagarClick(Sender: TObject);
   private
-    procedure FetchWeather(const UseGrijjy: Boolean);
-    procedure OnWeatherSuccess(const Json: string);
+    procedure FazBusca(const UseGrijjy: Boolean);
+    procedure OnWeatherSuccess(const Json: string; const UseGrijjy: Boolean);
     procedure OnWeatherError(const Msg: string);
   public
   end;
@@ -42,22 +34,31 @@ implementation
 
 {$R *.dfm}
 
-procedure TFormPrincipal.btnFetchGrijjyClick(Sender: TObject);
+procedure TFormPrincipal.btnBuscaComGrijjyClick(Sender: TObject);
 begin
-  FetchWeather(True);
+  FazBusca(True); // entra aqui usa Grijjy
 end;
-procedure TFormPrincipal.btnFetchRestJsonClick(Sender: TObject);
+
+procedure TFormPrincipal.btnBuscaComRestJsonClick(Sender: TObject);
 begin
-  FetchWeather(False);
+  FazBusca(False); // entra aqui usa Rest.Json
 end;
-procedure TFormPrincipal.FetchWeather(const UseGrijjy: Boolean);
+
+procedure TFormPrincipal.FazBusca(const UseGrijjy: Boolean);
 begin
   memResultado.Clear;
+
+  if edCidade.Text = '' then
+  begin
+    memResultado.Lines.Add('Por favor, insira o nome da cidade!');
+    Exit;
+  end;
+
   TWeatherRequestThread.Create(
     edCidade.Text,
     procedure(Json: string)
     begin
-      OnWeatherSuccess(Json);
+      OnWeatherSuccess(Json, UseGrijjy);
     end,
     procedure(Msg: string)
     begin
@@ -65,32 +66,49 @@ begin
     end
   ).Start;
 end;
-procedure TFormPrincipal.OnWeatherSuccess(const Json: string);
+
+procedure TFormPrincipal.OnWeatherSuccess(const Json: string; const UseGrijjy: Boolean);
 var
   Controller: TWeatherController;
   WeatherData: TWeatherModel;
 begin
   Controller := TWeatherController.Create;
   try
-    if btnFetchGrijjy.Down then
-      WeatherData := Controller.ParseWithGrijjy(Json)
-    else
-      WeatherData := Controller.ParseWithRestJson(Json);
-    memResultado.Lines.Add('Region: ' + WeatherData.Region);
-    memResultado.Lines.Add('Temp_c: ' + FloatToStr(WeatherData.Temp_c) + '°C');
-    memResultado.Lines.Add('Temp_F: ' + FloatToStr(WeatherData.Temp_f) + '°F');
-    memResultado.Lines.Add('condition: ' + WeatherData.Condition);
+    try
+      if UseGrijjy then
+        WeatherData := Controller.ParseWithGrijjy(Json)
+      else
+        WeatherData := Controller.ParseWithRestJson(Json);
+
+      memResultado.Lines.Add('Horário da consulta: ' + WeatherData.GetLocalTime);
+      memResultado.Lines.Add('Cidade: ' + WeatherData.GetLocationName);
+      memResultado.Lines.Add('Região: ' + WeatherData.GetRegion);
+      memResultado.Lines.Add('País: ' + WeatherData.GetCountry);
+      memResultado.Lines.Add('Latitude: ' + FloatToStr(WeatherData.GetLatitude));
+      memResultado.Lines.Add('Longitude: ' + FloatToStr(WeatherData.GetLongitude));
+      memResultado.Lines.Add('Timezone: ' + WeatherData.GetTimeZone);
+      memResultado.Lines.Add('Última atualização: ' + WeatherData.GetLastUpdated);
+      memResultado.Lines.Add('Temperatura em (C): ' + FloatToStr(WeatherData.GetTemperatureC) + '°C');
+      memResultado.Lines.Add('Temperatura em (F): ' + FloatToStr(WeatherData.GetTemperatureF) + '°F');
+    except
+      on E: Exception do
+        memResultado.Lines.Add('Erro ao processar JSON: ' + E.Message);
+    end;
   finally
     Controller.Free;
+    WeatherData.Free;
   end;
 end;
+
 procedure TFormPrincipal.OnWeatherError(const Msg: string);
 begin
   memResultado.Lines.Add('Erro ao buscar dados: ' + Msg);
 end;
-procedure TFormPrincipal.btnSaveJSONClick(Sender: TObject);
+
+procedure TFormPrincipal.btnApagarClick(Sender: TObject);
 begin
-  memResultado.Lines.SaveToFile('WeatherData.json');
-  ShowMessage('Dados salvos em WeatherData.json');
+  memResultado.Clear;
 end;
+
 end.
+
