@@ -68,7 +68,7 @@ end;
 
 procedure TWeatherModel.Setcountry(const Value: String);
 begin
-  Fcontry := Value;
+  Fcountry := Value;
 end;
 
 procedure TWeatherModel.Setlat(const Value: String);

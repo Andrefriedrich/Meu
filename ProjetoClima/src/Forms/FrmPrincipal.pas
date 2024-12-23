@@ -81,7 +81,7 @@ begin
         WeatherData := Controller.ParseWithRestJson(Json);
 
       memResultado.Lines.Add('Horário da consulta: ' + WeatherData.Localtime);
-      memResultado.Lines.Add('Cidade: ' + WeatherData.Region);
+      memResultado.Lines.Add('Cidade: ' + WeatherData.Name);
       memResultado.Lines.Add('Região: ' + WeatherData.Region);
       memResultado.Lines.Add('País: ' + WeatherData.Country);
       memResultado.Lines.Add('Latitude: ' + WeatherData.Lat);
