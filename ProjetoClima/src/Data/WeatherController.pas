@@ -21,7 +21,7 @@ end;
 
 function TWeatherController.ParseWithRestJson(const Json: string): TWeatherModel;
 begin
-  Result := TWeatherModel.Create(Json);
+  //Result := TWeatherModel.Create(Json);
 end;
 
 end.

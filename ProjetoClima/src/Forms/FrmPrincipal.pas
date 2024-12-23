@@ -80,16 +80,12 @@ begin
       else
         WeatherData := Controller.ParseWithRestJson(Json);
 
-      memResultado.Lines.Add('Horário da consulta: ' + WeatherData.GetLocalTime);
-      memResultado.Lines.Add('Cidade: ' + WeatherData.GetLocationName);
-      memResultado.Lines.Add('Região: ' + WeatherData.GetRegion);
-      memResultado.Lines.Add('País: ' + WeatherData.GetCountry);
-      memResultado.Lines.Add('Latitude: ' + FloatToStr(WeatherData.GetLatitude));
-      memResultado.Lines.Add('Longitude: ' + FloatToStr(WeatherData.GetLongitude));
-      memResultado.Lines.Add('Timezone: ' + WeatherData.GetTimeZone);
-      memResultado.Lines.Add('Última atualização: ' + WeatherData.GetLastUpdated);
-      memResultado.Lines.Add('Temperatura em (C): ' + FloatToStr(WeatherData.GetTemperatureC) + '°C');
-      memResultado.Lines.Add('Temperatura em (F): ' + FloatToStr(WeatherData.GetTemperatureF) + '°F');
+      memResultado.Lines.Add('Horário da consulta: ' + WeatherData.Localtime);
+      memResultado.Lines.Add('Cidade: ' + WeatherData.Region);
+      memResultado.Lines.Add('Região: ' + WeatherData.Region);
+      memResultado.Lines.Add('País: ' + WeatherData.Country);
+      memResultado.Lines.Add('Latitude: ' + WeatherData.Lat);
+      memResultado.Lines.Add('Longitude: ' + WeatherData.Lon);
     except
       on E: Exception do
         memResultado.Lines.Add('Erro ao processar JSON: ' + E.Message);
