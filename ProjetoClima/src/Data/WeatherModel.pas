@@ -9,11 +9,13 @@ type
   TWeatherModel = class
   private
     Fname, Fregion, Fcontry, Flat, Flon, Fcountry, Flocaltime,
-    FTempC: String;
+    FTempC, FText: String;
 
     procedure CarregarJson(var AJsonFile: string);
     procedure ProcessaJsonLocation(const AJson : TgoBsonDocument);
     procedure ProcessaJsonCurrent(const AJson : TgoBsonDocument);
+    procedure ProcessaJsonCondition(const AJson : TgoBsonDocument);
+
     procedure Setname(Const Value: String);
     procedure Setregion(Const Value: String);
     procedure Setcountry(Const Value: String);
@@ -21,6 +23,7 @@ type
     procedure Setlon(Const Value: String);
     procedure SetLocaltime(const Value: string);
     procedure SetTempC(const Value: string);
+    procedure SetText(const Value: string);
 
   public
     property Name      : string read FName       write SetName;
@@ -29,7 +32,10 @@ type
     property Lat       : string read FLat        write SetLat;
     property Lon       : string read FLon        write SetLon;
     property Localtime : string read FLocaltime  write SetLocaltime;
+
     property TempC     : string read FTempC      write SetTempC;
+
+    property Text : string read FText  write SetText;
 
     constructor Create(aJson: String);
   end;
@@ -41,7 +47,7 @@ type
 
 procedure TWeatherModel.CarregarJson(var AJsonFile: string);
 var
-  AJsonDocument, AJsonLocation, AJsonCurrent: TgoBsonDocument;
+  AJsonDocument, AJsonLocation, AJsonCurrent, AJsonCondition: TgoBsonDocument;
 begin
   if IsUTF8String(AJsonFile) then
     AJsonFile := UTF8Decode(AJsonFile);
@@ -55,6 +61,10 @@ begin
     if AJsonDocument.Contains('current') then
       if TgoBsonDocument.TryParse(AJsonDocument['current'].AsBsonDocument.ToJson, AJsonCurrent) then
         ProcessaJsonCurrent(AJsonCurrent);
+
+     if AJsonCurrent.Contains('condition') then
+      if TgoBsonDocument.TryParse(AJsonCurrent['condition'].AsBsonDocument.ToJson, AJsonCondition) then
+        ProcessaJsonCondition(AJsonCondition);
   end;
 end;
 
@@ -63,9 +73,15 @@ begin
   CarregarJson(aJson);
 end;
 
+procedure TWeatherModel.ProcessaJsonCondition(const AJson: TgoBsonDocument);
+begin
+  FText := AJson['text'].ToString();
+end;
+
 procedure TWeatherModel.ProcessaJsonCurrent(const AJson: TgoBsonDocument);
 begin
-  TempC      := AJson['temp_c'].ToString();
+  TempC     := AJson['temp_c'].ToString();
+
 end;
 
 procedure TWeatherModel.ProcessaJsonLocation(const AJson: TgoBsonDocument);
@@ -79,6 +95,11 @@ begin
 
 end;
 
+
+procedure TWeatherModel.SetText(const Value: string);
+begin
+  FText := Value;
+end;
 
 procedure TWeatherModel.Setcountry(const Value: String);
 begin
