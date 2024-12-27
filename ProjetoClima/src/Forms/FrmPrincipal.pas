@@ -87,6 +87,7 @@ begin
       memResultado.Lines.Add('Latitude: ' + WeatherData.Lat);
       memResultado.Lines.Add('Longitude: ' + WeatherData.Lon);
       memResultado.Lines.Add('Temperatura: ' + WeatherData.TempC);
+      memResultado.Lines.Add('Clima: ' + WeatherData.Text);
     except
       on E: Exception do
         memResultado.Lines.Add('Erro ao processar JSON: ' + E.Message);

@@ -45,7 +45,7 @@ begin
   HTTP := TIdHTTP.Create(nil);
   try
     try
-      URL := Format('http://api.weatherapi.com/v1/current.json?key=b809c9b15772403e8e810413240512&q=%s&aqi=yes', [FCity]);
+      URL := Format('http://api.weatherapi.com/v1/current.json?key=b809c9b15772403e8e810413240512&q=%s&aqi=yes&lang=pt', [FCity]);
       FResponse := HTTP.Get(URL);
     except
       on E: Exception do

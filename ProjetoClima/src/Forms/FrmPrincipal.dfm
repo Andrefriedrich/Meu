@@ -30,8 +30,6 @@ object FormPrincipal: TFormPrincipal
   object memResultado: TcxMemo
     Left = 278
     Top = 51
-    Lines.Strings = (
-      'memResultado')
     TabOrder = 2
     Height = 302
     Width = 427

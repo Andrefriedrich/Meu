@@ -13,48 +13,61 @@ type
     Fwind_dir, Fpressure_mb, Fpressure_in, Fprecip_mm, Fprecip_in,
     Fhumidity, Fcloud, Ffeelslike_c, Ffeelslike_f, Fwindchill_c,
     Fwindchill_f, Fheatindex_c, Fheatindex_f, Fdewpoint_c, Fdewpoint_f,
-    Fvis_km, Fvis_miles, Fuv, Fgust_mph, Fgust_kph: String;
+    Fvis_km, Fvis_miles, Fuv, Fgust_mph, Fgust_kph, Fco, Fno2, Fo3, Fso2,
+    Fpm2_5, Fpm10, Fus_epa_index, Fgb_defra_index: String;
 
     procedure CarregarJson(var AJsonFile: string);
     procedure ProcessaJsonLocation(const AJson : TgoBsonDocument);
     procedure ProcessaJsonCurrent(const AJson : TgoBsonDocument);
     procedure ProcessaJsonCondition(const AJson : TgoBsonDocument);
+    procedure ProcessaJsonAirQuality(const AJson: TgoBsonDocument);
 
-    procedure Setname         (Const Value: String);
-    procedure Setregion       (Const Value: String);
-    procedure Setcountry      (Const Value: String);
-    procedure Setlat          (Const Value: String);
-    procedure Setlon          (Const Value: String);
-    procedure SetLocaltime    (const Value: String);
-    procedure SetTempC        (Const Value: String);
-    procedure SetText         (Const Value: String);
-    procedure SetFIcon        (const Value: String);
-    procedure SetFCode        (Const Value: String);
-    procedure SetCode         (const Value: string);
-    procedure SetIcon         (const Value: string);
-    procedure Setwind_mph     (const Value: string);
-    procedure Setwind_kph     (const Value: string);
-    procedure Setwind_degree  (const Value: string);
-    procedure Setwind_dir     (const Value: string);
-    procedure Setpressure_mb  (const Value: string);
-    procedure Setpressure_in  (const Value: string);
-    procedure Setprecip_mm    (const Value: string);
-    procedure Setprecip_in    (const Value: string);
-    procedure Sethumidity     (const Value: string);
-    procedure Setcloud        (const Value: string);
-    procedure Setfeelslike_c  (const Value: string);
-    procedure Setfeelslike_f  (const Value: string);
-    procedure Setwindchill_c  (const Value: string);
-    procedure Setwindchill_f  (const Value: string);
-    procedure Setheatindex_c  (const Value: string);
-    procedure Setheatindex_f  (const Value: string);
-    procedure Setdewpoint_c   (const Value: string);
-    procedure Setdewpoint_f   (const Value: string);
-    procedure Setvis_km       (const Value: string);
-    procedure Setvis_miles    (const Value: string);
-    procedure Setuv           (const Value: string);
-    procedure Setgust_mph     (const Value: string);
-    procedure Setgust_kph     (const Value: string);
+    procedure Setname             (Const Value: String);
+    procedure Setregion           (Const Value: String);
+    procedure Setcountry          (Const Value: String);
+    procedure Setlat              (Const Value: String);
+    procedure Setlon              (Const Value: String);
+    procedure SetLocaltime        (const Value: String);
+    procedure SetTempC            (Const Value: String);
+    procedure SetText             (Const Value: String);
+    procedure SetFIcon            (const Value: String);
+    procedure SetFCode            (Const Value: String);
+    procedure SetCode             (const Value: string);
+    procedure SetIcon             (const Value: string);
+    procedure Setwind_mph         (const Value: string);
+    procedure Setwind_kph         (const Value: string);
+    procedure Setwind_degree      (const Value: string);
+    procedure Setwind_dir         (const Value: string);
+    procedure Setpressure_mb      (const Value: string);
+    procedure Setpressure_in      (const Value: string);
+    procedure Setprecip_mm        (const Value: string);
+    procedure Setprecip_in        (const Value: string);
+    procedure Sethumidity         (const Value: string);
+    procedure Setcloud            (const Value: string);
+    procedure Setfeelslike_c      (const Value: string);
+    procedure Setfeelslike_f      (const Value: string);
+    procedure Setwindchill_c      (const Value: string);
+    procedure Setwindchill_f      (const Value: string);
+    procedure Setheatindex_c      (const Value: string);
+    procedure Setheatindex_f      (const Value: string);
+    procedure Setdewpoint_c       (const Value: string);
+    procedure Setdewpoint_f       (const Value: string);
+    procedure Setvis_km           (const Value: string);
+    procedure Setvis_miles        (const Value: string);
+    procedure Setuv               (const Value: string);
+    procedure Setgust_mph         (const Value: string);
+    procedure Setgust_kph         (const Value: string);
+    procedure Setco               (const Value: string);
+    procedure Setno2              (const Value: string);
+    procedure Seto3               (const Value: string);
+    procedure Setso2              (const Value: string);
+    procedure Setpm2_5            (const Value: string);
+    procedure Setpm10             (const Value: string);
+    procedure Setus_epa_index     (const Value: string);
+    procedure Setgb_defra_index   (const Value: string);
+
+
+
 
   public
     property Name      : string read FName       write SetName;
@@ -92,6 +105,15 @@ type
     property gust_mph    : string read Fgust_mph    write Setgust_mph;
     property gust_kph    : string read Fgust_kph    write Setgust_kph;
 
+    property co             : string read Fco               write Setco;
+    property no2            : string read Fno2              write Setno2;
+    property o3             : string read Fo3               write Seto3;
+    property so2            : string read Fso2              write Setso2;
+    property pm2_5          : string read Fpm2_5            write Setpm2_5;
+    property pm10           : string read Fpm10             write Setpm10;
+    property us_epa_index   : string read Fus_epa_index     write Setus_epa_index;
+    property gb_defra_index : string read Fgb_defra_index   write Setgb_defra_index;
+
     constructor Create(aJson: String);
   end;
 
@@ -102,7 +124,7 @@ type
 
 procedure TWeatherModel.CarregarJson(var AJsonFile: string);
 var
-  AJsonDocument, AJsonLocation, AJsonCurrent, AJsonCondition: TgoBsonDocument;
+  AJsonDocument, AJsonLocation, AJsonCurrent, AJsonCondition, AJsonAirQuality: TgoBsonDocument;
 begin
   if IsUTF8String(AJsonFile) then
     AJsonFile := UTF8Decode(AJsonFile);
@@ -121,6 +143,10 @@ begin
       if AJsonCurrent.Contains('condition') then
         if TgoBsonDocument.TryParse(AJsonCurrent['condition'].AsBsonDocument.ToJson, AJsonCondition) then
           ProcessaJsonCondition(AJsonCondition);
+
+      if AJsonCurrent.Contains('air_quality') then
+        if TgoBsonDocument.TryParse(AJsonCurrent['air_quality'].AsBsonDocument.ToJson, AJsonAirQuality) then
+          ProcessaJsonAirQuality(AJsonAirQuality);
     end;
   end;
 end;
@@ -165,6 +191,18 @@ begin
   TempC := AJson['temp_c'].ToString();
 end;
 
+procedure TWeatherModel.ProcessaJsonAirQuality(const AJson: TgoBsonDocument);
+begin
+  co              := AJson['co'].ToString();
+  no2             := AJson['no2'].ToString();
+  o3              := AJson['o3'].ToString();
+  so2             := AJson['so2'].ToString();
+  pm2_5           := AJson['pm2_5'].ToString();
+  pm10            := AJson['pm10'].ToString();
+  us_epa_index    := AJson['us_epa_index'].ToString();
+  gb_defra_index  := AJson['gb_defra_index'].ToString();
+end;
+
 procedure TWeatherModel.ProcessaJsonLocation(const AJson: TgoBsonDocument);
 begin
   Name       := AJson['name'].ToString();
@@ -183,6 +221,16 @@ end;
 procedure TWeatherModel.Setcloud(const Value: string);
 begin
   Fcloud := Value;
+end;
+
+procedure TWeatherModel.Setco(const Value: string);
+begin
+  Fco := Value;
+end;
+
+procedure TWeatherModel.Setus_epa_index(const Value: string);
+begin
+  Fus_epa_index := Value;
 end;
 
 procedure TWeatherModel.Setuv(const Value: string);
@@ -270,6 +318,11 @@ begin
   FIcon := Value;
 end;
 
+procedure TWeatherModel.Setgb_defra_index(const Value: string);
+begin
+  Fgb_defra_index := Value;
+end;
+
 procedure TWeatherModel.Setgust_kph(const Value: string);
 begin
   Fgust_kph := Value;
@@ -320,6 +373,26 @@ begin
   Fname := Value;
 end;
 
+procedure TWeatherModel.Setno2(const Value: string);
+begin
+  Fno2 := Value;
+end;
+
+procedure TWeatherModel.Seto3(const Value: string);
+begin
+  Fo3  := Value;
+end;
+
+procedure TWeatherModel.Setpm10(const Value: string);
+begin
+  Fpm10  := Value;
+end;
+
+procedure TWeatherModel.Setpm2_5(const Value: string);
+begin
+  Fpm2_5  := Value;
+end;
+
 procedure TWeatherModel.Setprecip_in(const Value: string);
 begin
   Fprecip_in := Value;
@@ -343,6 +416,11 @@ end;
 procedure TWeatherModel.Setregion(const Value: String);
 begin
   Fregion := Value;
+end;
+
+procedure TWeatherModel.Setso2(const Value: string);
+begin
+  Fso2 := Value;
 end;
 
 procedure TWeatherModel.SetTempC(const Value: String);
