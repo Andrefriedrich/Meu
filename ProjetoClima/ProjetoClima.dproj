@@ -105,6 +105,7 @@
         <DCCReference Include="src\Data\WeatherRequestThread.pas"/>
         <DCCReference Include="src\Data\WeatherController.pas"/>
         <DCCReference Include="src\Data\WeatherModel.pas"/>
+        <DCCReference Include="bin\Util.pas"/>
         <BuildConfiguration Include="Release">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

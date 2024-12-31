@@ -66,9 +66,6 @@ type
     procedure Setus_epa_index     (const Value: string);
     procedure Setgb_defra_index   (const Value: string);
 
-
-
-
   public
     property Name      : string read FName       write SetName;
     property Region    : string read FRegion     write SetRegion;
@@ -161,6 +158,11 @@ begin
   Text        := AJson['text'].ToString();
   Icon        := AJson['Icon'].ToString();
   Code        := AJson['Code'].ToString();
+end;
+
+procedure TWeatherModel.ProcessaJsonCurrent(const AJson: TgoBsonDocument);
+begin
+  TempC       := AJson['temp_c'].ToString();
   wind_mph    := AJson['wind_mph'].ToString();
   wind_kph    := AJson['wind_kph'].ToString();
   wind_degree := AJson['wind_degree'].ToString();
@@ -184,11 +186,6 @@ begin
   uv          := AJson['uv'].ToString();
   gust_mph    := AJson['gust_mph'].ToString();
   gust_kph    := AJson['gust_kph'].ToString();
-end;
-
-procedure TWeatherModel.ProcessaJsonCurrent(const AJson: TgoBsonDocument);
-begin
-  TempC := AJson['temp_c'].ToString();
 end;
 
 procedure TWeatherModel.ProcessaJsonAirQuality(const AJson: TgoBsonDocument);

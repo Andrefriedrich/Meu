@@ -1,8 +1,8 @@
 object FormPrincipal: TFormPrincipal
   Left = 0
   Top = 0
-  ClientHeight = 361
-  ClientWidth = 724
+  ClientHeight = 571
+  ClientWidth = 868
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -30,9 +30,16 @@ object FormPrincipal: TFormPrincipal
   object memResultado: TcxMemo
     Left = 278
     Top = 51
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -19
+    Style.Font.Name = 'Tahoma'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
     TabOrder = 2
-    Height = 302
-    Width = 427
+    Height = 494
+    Width = 419
   end
   object btnBuscaComRestJson: TcxButton
     Left = 136

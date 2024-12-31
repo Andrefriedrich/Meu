@@ -5,7 +5,8 @@ uses
   FrmPrincipal in 'src\Forms\FrmPrincipal.pas' {Form1},
   WeatherRequestThread in 'src\Data\WeatherRequestThread.pas',
   WeatherController in 'src\Data\WeatherController.pas',
-  WeatherModel in 'src\Data\WeatherModel.pas';
+  WeatherModel in 'src\Data\WeatherModel.pas',
+  Util in 'bin\Util.pas';
 
 {$R *.res}
 

@@ -8,7 +8,7 @@ uses
   cxLookAndFeelPainters, cxContainer, cxEdit, cxLabel, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, Vcl.Menus, Vcl.StdCtrls, cxButtons,
   Vcl.ExtCtrls, WeatherRequestThread, WeatherController, WeatherModel,
-  cxMemo;
+  cxMemo, Util;
 
 type
   TFormPrincipal = class(TForm)
@@ -80,7 +80,7 @@ begin
       else
         WeatherData := Controller.ParseWithRestJson(Json);
 
-      memResultado.Lines.Add('Horário da consulta: ' + WeatherData.Localtime);
+      memResultado.Lines.Add('Ultima atualização de dados: ' + WeatherData.Localtime);
       memResultado.Lines.Add('Cidade: ' + WeatherData.Name);
       memResultado.Lines.Add('Região: ' + WeatherData.Region);
       memResultado.Lines.Add('País: ' + WeatherData.Country);
@@ -88,6 +88,20 @@ begin
       memResultado.Lines.Add('Longitude: ' + WeatherData.Lon);
       memResultado.Lines.Add('Temperatura: ' + WeatherData.TempC);
       memResultado.Lines.Add('Clima: ' + WeatherData.Text);
+      memResultado.Lines.Add('Vento em km/h: ' + WeatherData.wind_kph);
+      memResultado.Lines.Add('Direção do vento: ' + GetDirecaoVentoText(WeatherData.wind_dir));
+      memResultado.Lines.Add('Precipitação: ' + WeatherData.precip_mm);
+      memResultado.Lines.Add('Humidade: ' + WeatherData.humidity);
+      memResultado.Lines.Add('Distancia de visão: ' + WeatherData.vis_km);
+      memResultado.Lines.Add('Indice UV: ' + WeatherData.uv);
+
+      memResultado.Lines.Add('Qualidade do ar');
+      memResultado.Lines.Add('Monoxido de carbono: ' + WeatherData.co + 'm3');
+      memResultado.Lines.Add('Ozonio: ' + WeatherData.o3 + 'm3');
+      memResultado.Lines.Add('Dioxido de nidrogenio: ' + WeatherData.no2 + 'm3');
+
+
+
     except
       on E: Exception do
         memResultado.Lines.Add('Erro ao processar JSON: ' + E.Message);
