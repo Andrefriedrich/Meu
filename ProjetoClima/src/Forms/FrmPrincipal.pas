@@ -55,7 +55,7 @@ begin
   end;
 
   TWeatherRequestThread.Create(
-    edCidade.Text,
+    FormatCityNameForURL(edCidade.Text),
     procedure(Json: string)
     begin
       OnWeatherSuccess(Json, UseGrijjy);
@@ -99,9 +99,6 @@ begin
       memResultado.Lines.Add('Monoxido de carbono: ' + WeatherData.co + 'm3');
       memResultado.Lines.Add('Ozonio: ' + WeatherData.o3 + 'm3');
       memResultado.Lines.Add('Dioxido de nidrogenio: ' + WeatherData.no2 + 'm3');
-
-
-
     except
       on E: Exception do
         memResultado.Lines.Add('Erro ao processar JSON: ' + E.Message);

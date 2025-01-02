@@ -3,11 +3,12 @@ unit Util;
 interface
 
 function GetDirecaoVentoText(const Abbreviation: string): string;
+function FormatCityNameForURL(const CityName: string): string;
 
 implementation
 
 uses
-  System.Generics.Collections;
+  System.Generics.Collections, System.NetEncoding;
 
 var
   Direcao: TDictionary<string, string>;
@@ -39,8 +40,12 @@ begin
     Result := 'Direção desconhecida';
 end;
 
+function FormatCityNameForURL(const CityName: string): string;
+begin
+  Result := TNetEncoding.URL.Encode(CityName);
+end;
+
 initialization
   InitializeDirecao;
-
 end.
 
