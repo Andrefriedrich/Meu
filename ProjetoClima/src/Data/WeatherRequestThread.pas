@@ -6,19 +6,13 @@ uses
   System.Classes, System.SysUtils;
 
 type
-  TWeatherRequestThread = class(TThread)
+  TWeatherRequest = class
   private
-    FCity: string;
-    FOnSuccess: TProc<string>;
-    FOnError: TProc<string>;
-    FResponse: string;
-    FErrorMsg: string;
-  protected
-    procedure Execute; override;
-    procedure NotifySuccess;
-    procedure NotifyError;
+    FURL: string;
+
   public
-    constructor Create(const City: string; OnSuccess, OnError: TProc<string>);
+    function Get : String;
+    constructor Create(const URL: string);
   end;
 
 implementation
@@ -28,50 +22,29 @@ uses
 
 { TWeatherRequestThread }
 
-constructor TWeatherRequestThread.Create(const City: string; OnSuccess, OnError: TProc<string>);
+constructor TWeatherRequest.Create(const URL: string);
 begin
-  inherited Create(True);
-  FreeOnTerminate := True;
-  FCity := City;
-  FOnSuccess := OnSuccess;
-  FOnError := OnError;
+  FURL := URL;
 end;
 
-procedure TWeatherRequestThread.Execute;
+function TWeatherRequest.Get: String;
 var
   HTTP: TIdHTTP;
-  URL: string;
 begin
-  HTTP := TIdHTTP.Create(nil);
+  Result := '';
+  HTTP   := TIdHTTP.Create(nil);
   try
     try
-      URL := Format('http://api.weatherapi.com/v1/current.json?key=b809c9b15772403e8e810413240512&q=%s&aqi=yes&lang=pt', [FCity]);
-      FResponse := HTTP.Get(URL);
+      Result := HTTP.Get(FURL);
     except
-      on E: Exception do
-        FErrorMsg := E.Message;
+//      on E: Exception do
+  //      FErrorMsg := E.Message;
     end;
   finally
     HTTP.Free;
   end;
-
-  if FErrorMsg = '' then
-    Synchronize(NotifySuccess)
-  else
-    Synchronize(NotifyError);
 end;
 
-procedure TWeatherRequestThread.NotifySuccess;
-begin
-  if Assigned(FOnSuccess) then
-    FOnSuccess(FResponse);
-end;
-
-procedure TWeatherRequestThread.NotifyError;
-begin
-  if Assigned(FOnError) then
-    FOnError(FErrorMsg);
-end;
 
 end.
 

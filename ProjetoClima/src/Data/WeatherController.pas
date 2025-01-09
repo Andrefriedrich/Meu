@@ -3,23 +3,50 @@ unit WeatherController;
 interface
 
 uses
-  System.SysUtils, WeatherModel;
+  System.SysUtils, WeatherModel, WeatherRequestThread;
 
 type
   TWeatherController = class
+  private
+    FCity : String;
+    Fresponse : String;
+    function GetURL: String;
   public
-    function ParseWithGrijjy(const Json: string): TWeatherModel;
-    function ParseWithRestJson(const Json: string): TWeatherModel;
+    function ParseWithGrijjy: TWeatherModel;
+    function ParseWithRestJson: TWeatherModel;
+    Procedure Get;
+    constructor Create(City : String);
   end;
 
 implementation
 
-function TWeatherController.ParseWithGrijjy(const Json: string): TWeatherModel;
+constructor TWeatherController.Create(City: String);
 begin
-  Result := TWeatherModel.Create(Json);
+  FCity := City;
 end;
 
-function TWeatherController.ParseWithRestJson(const Json: string): TWeatherModel;
+procedure TWeatherController.Get;
+  var Request : TWeatherRequest;
+begin
+  Request := TWeatherRequest.Create(GetURL);
+  try
+    FResponse := Request.Get;
+  finally
+    Request.Free;
+  end;
+end;
+
+function TWeatherController.GetURL: String;
+begin
+  Result := Format('http://api.weatherapi.com/v1/current.json?key=b809c9b15772403e8e810413240512&q=%s&aqi=yes&lang=pt', [FCity]);
+end;
+
+function TWeatherController.ParseWithGrijjy: TWeatherModel;
+begin
+  Result := TWeatherModel.Create(Fresponse);
+end;
+
+function TWeatherController.ParseWithRestJson: TWeatherModel;
 begin
   //Result := TWeatherModel.Create(Json);
 end;

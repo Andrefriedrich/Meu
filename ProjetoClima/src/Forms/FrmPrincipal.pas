@@ -22,8 +22,8 @@ type
     procedure btnApagarClick(Sender: TObject);
   private
     procedure FazBusca(const UseGrijjy: Boolean);
-    procedure OnWeatherSuccess(const Json: string; const UseGrijjy: Boolean);
     procedure OnWeatherError(const Msg: string);
+    procedure MostraResultados(const WeatherData: Tweathermodel);
   public
   end;
 
@@ -35,8 +35,19 @@ implementation
 {$R *.dfm}
 
 procedure TFormPrincipal.btnBuscaComGrijjyClick(Sender: TObject);
+var
+  WeatherData: TWeatherModel;
+  WeatherController: TWeatherController;
 begin
-  FazBusca(True); // entra aqui usa Grijjy
+  WeatherController := TWeatherController.Create(FormatCityNameForURL(edCidade.Text));
+  try
+    WeatherController.Get;
+    WeatherData := WeatherController.ParseWithGrijjy;
+    if Assigned(WeatherData) then
+      MostraResultados(WeatherData);
+  finally
+
+  end;
 end;
 
 procedure TFormPrincipal.btnBuscaComRestJsonClick(Sender: TObject);
@@ -54,59 +65,29 @@ begin
     Exit;
   end;
 
-  TWeatherRequestThread.Create(
-    FormatCityNameForURL(edCidade.Text),
-    procedure(Json: string)
-    begin
-      OnWeatherSuccess(Json, UseGrijjy);
-    end,
-    procedure(Msg: string)
-    begin
-      OnWeatherError(Msg);
-    end
-  ).Start;
 end;
 
-procedure TFormPrincipal.OnWeatherSuccess(const Json: string; const UseGrijjy: Boolean);
-var
-  Controller: TWeatherController;
-  WeatherData: TWeatherModel;
+procedure TFormPrincipal.MostraResultados(const WeatherData: Tweathermodel);
 begin
-  Controller := TWeatherController.Create;
-  try
-    try
-      if UseGrijjy then
-        WeatherData := Controller.ParseWithGrijjy(Json)
-      else
-        WeatherData := Controller.ParseWithRestJson(Json);
+  memResultado.Lines.Add('Ultima atualização de dados: ' + WeatherData.Localtime);
+  memResultado.Lines.Add('Cidade: ' + WeatherData.Name);
+  memResultado.Lines.Add('Região: ' + WeatherData.Region);
+  memResultado.Lines.Add('País: ' + WeatherData.Country);
+  memResultado.Lines.Add('Latitude: ' + WeatherData.Lat.ToString);
+  memResultado.Lines.Add('Longitude: ' + WeatherData.Lon.ToString);
+  memResultado.Lines.Add('Temperatura: ' + WeatherData.TempC.ToString);
+  memResultado.Lines.Add('Clima: ' + WeatherData.Text);
+  memResultado.Lines.Add('Vento em km/h: ' + WeatherData.wind_kph.ToString);
+  memResultado.Lines.Add('Direção do vento: ' + GetDirecaoVentoText(WeatherData.wind_dir));
+  memResultado.Lines.Add('Precipitação: ' + WeatherData.precip_mm.ToString);
+  memResultado.Lines.Add('Humidade: ' + WeatherData.humidity.ToString);
+  memResultado.Lines.Add('Distancia de visão: ' + WeatherData.vis_km.ToString);
+  memResultado.Lines.Add('Indice UV: ' + WeatherData.uv.ToString);
 
-      memResultado.Lines.Add('Ultima atualização de dados: ' + WeatherData.Localtime);
-      memResultado.Lines.Add('Cidade: ' + WeatherData.Name);
-      memResultado.Lines.Add('Região: ' + WeatherData.Region);
-      memResultado.Lines.Add('País: ' + WeatherData.Country);
-      memResultado.Lines.Add('Latitude: ' + WeatherData.Lat);
-      memResultado.Lines.Add('Longitude: ' + WeatherData.Lon);
-      memResultado.Lines.Add('Temperatura: ' + WeatherData.TempC);
-      memResultado.Lines.Add('Clima: ' + WeatherData.Text);
-      memResultado.Lines.Add('Vento em km/h: ' + WeatherData.wind_kph);
-      memResultado.Lines.Add('Direção do vento: ' + GetDirecaoVentoText(WeatherData.wind_dir));
-      memResultado.Lines.Add('Precipitação: ' + WeatherData.precip_mm);
-      memResultado.Lines.Add('Humidade: ' + WeatherData.humidity);
-      memResultado.Lines.Add('Distancia de visão: ' + WeatherData.vis_km);
-      memResultado.Lines.Add('Indice UV: ' + WeatherData.uv);
-
-      memResultado.Lines.Add('Qualidade do ar');
-      memResultado.Lines.Add('Monoxido de carbono: ' + WeatherData.co + 'm3');
-      memResultado.Lines.Add('Ozonio: ' + WeatherData.o3 + 'm3');
-      memResultado.Lines.Add('Dioxido de nidrogenio: ' + WeatherData.no2 + 'm3');
-    except
-      on E: Exception do
-        memResultado.Lines.Add('Erro ao processar JSON: ' + E.Message);
-    end;
-  finally
-    Controller.Free;
-    WeatherData.Free;
-  end;
+  memResultado.Lines.Add('Qualidade do ar');
+  memResultado.Lines.Add('Monoxido de carbono: ' + WeatherData.co.ToString + 'm3');
+  memResultado.Lines.Add('Ozonio: ' + WeatherData.o3.ToString + 'm3');
+  memResultado.Lines.Add('Dioxido de nidrogenio: ' + WeatherData.no2.ToString + 'm3');
 end;
 
 procedure TFormPrincipal.OnWeatherError(const Msg: string);
