@@ -12,6 +12,12 @@ object FormPrincipal: TFormPrincipal
   OldCreateOrder = False
   PixelsPerInch = 96
   TextHeight = 13
+  object ImagemClima: TImage
+    Left = 703
+    Top = 51
+    Width = 105
+    Height = 105
+  end
   object edCidade: TcxTextEdit
     Left = 136
     Top = 51

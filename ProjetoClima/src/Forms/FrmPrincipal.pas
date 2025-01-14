@@ -8,7 +8,7 @@ uses
   cxLookAndFeelPainters, cxContainer, cxEdit, cxLabel, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, Vcl.Menus, Vcl.StdCtrls, cxButtons,
   Vcl.ExtCtrls, WeatherRequestThread, WeatherController, WeatherModel,
-  cxMemo, Util;
+  cxMemo, Util, Vcl.Imaging.pngimage;
 
 type
   TFormPrincipal = class(TForm)
@@ -17,6 +17,7 @@ type
     memResultado: TcxMemo;
     btnBuscaComRestJson: TcxButton;
     btnBuscaComGrijjy: TcxButton;
+    ImagemClima: TImage;
     procedure btnBuscaComGrijjyClick(Sender: TObject);
     procedure btnBuscaComRestJsonClick(Sender: TObject);
     procedure btnApagarClick(Sender: TObject);
@@ -24,6 +25,8 @@ type
     procedure FazBusca(const UseGrijjy: Boolean);
     procedure OnWeatherError(const Msg: string);
     procedure MostraResultados(const WeatherData: Tweathermodel);
+    procedure DownloadAndDisplayImageWithController(
+      WeatherController: TWeatherController; const ImageURL: string);
   public
   end;
 
@@ -43,10 +46,43 @@ begin
   try
     WeatherController.Get;
     WeatherData := WeatherController.ParseWithGrijjy;
-    if Assigned(WeatherData) then
-      MostraResultados(WeatherData);
-  finally
 
+    if Assigned(WeatherData) then
+    begin
+      MostraResultados(WeatherData);
+
+      if not WeatherData.Icon.IsEmpty then
+        DownloadAndDisplayImageWithController(WeatherController, WeatherData.Icon);
+    end;
+  finally
+    WeatherController.Free;
+  end;
+end;
+
+procedure TFormPrincipal.DownloadAndDisplayImageWithController(WeatherController: TWeatherController; const ImageURL: string);
+var
+  MemoryStream: TMemoryStream;
+  PNGImage: TPngImage;
+begin
+  MemoryStream := TMemoryStream.Create;
+  PNGImage := TPngImage.Create;
+  try
+    try
+      WeatherController.SetURL(ImageURL);
+      WeatherController.GetImagem;
+
+      WeatherController.SaveResponseToStream(MemoryStream);
+
+      MemoryStream.Position := 0;
+      PNGImage.LoadFromStream(MemoryStream);
+      ImagemClima.Picture.Assign(PNGImage);
+    except
+      on E: Exception do
+        ShowMessage('Erro ao baixar a imagem: ' + E.Message);
+    end;
+  finally
+    MemoryStream.Free;
+    PNGImage.Free;
   end;
 end;
 
@@ -88,6 +124,7 @@ begin
   memResultado.Lines.Add('Monoxido de carbono: ' + WeatherData.co.ToString + 'm3');
   memResultado.Lines.Add('Ozonio: ' + WeatherData.o3.ToString + 'm3');
   memResultado.Lines.Add('Dioxido de nidrogenio: ' + WeatherData.no2.ToString + 'm3');
+  memResultado.Lines.Add('link da imagem: '+ WeatherData.Icon);
 end;
 
 procedure TFormPrincipal.OnWeatherError(const Msg: string);
