@@ -42,15 +42,13 @@ var
   WeatherData: TWeatherModel;
   WeatherController: TWeatherController;
 begin
-  WeatherController := TWeatherController.Create(FormatCityNameForURL(edCidade.Text));
+  WeatherController := TWeatherController.Create(TUtil.FormatCityNameForURL(edCidade.Text));
   try
     WeatherController.Get;
     WeatherData := WeatherController.ParseWithGrijjy;
-
     if Assigned(WeatherData) then
     begin
       MostraResultados(WeatherData);
-
       if not WeatherData.Icon.IsEmpty then
         DownloadAndDisplayImageWithController(WeatherController, WeatherData.Icon);
     end;
@@ -70,9 +68,7 @@ begin
     try
       WeatherController.SetURL(ImageURL);
       WeatherController.GetImagem;
-
       WeatherController.SaveResponseToStream(MemoryStream);
-
       MemoryStream.Position := 0;
       PNGImage.LoadFromStream(MemoryStream);
       ImagemClima.Picture.Assign(PNGImage);
@@ -114,7 +110,7 @@ begin
   memResultado.Lines.Add('Temperatura: ' + WeatherData.TempC.ToString);
   memResultado.Lines.Add('Clima: ' + WeatherData.Text);
   memResultado.Lines.Add('Vento em km/h: ' + WeatherData.wind_kph.ToString);
-  memResultado.Lines.Add('Direção do vento: ' + GetDirecaoVentoText(WeatherData.wind_dir));
+  memResultado.Lines.Add('Direção do vento: ' + TUtil.GetDirecaoVentoText(WeatherData.wind_dir));
   memResultado.Lines.Add('Precipitação: ' + WeatherData.precip_mm.ToString);
   memResultado.Lines.Add('Humidade: ' + WeatherData.humidity.ToString);
   memResultado.Lines.Add('Distancia de visão: ' + WeatherData.vis_km.ToString);

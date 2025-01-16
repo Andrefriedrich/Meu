@@ -12,6 +12,7 @@ type
 
   public
     function Get : String;
+    procedure GetImagem(Stream: TStream);
     constructor Create(const URL: string);
   end;
 
@@ -45,6 +46,17 @@ begin
   end;
 end;
 
+procedure TWeatherRequest.GetImagem(Stream: TStream);
+var
+  HttpClient: TIdHTTP;
+begin
+  HttpClient := TIdHTTP.Create;
+  try
+    HttpClient.Get(FURL, Stream);
+  finally
+    HttpClient.Free;
+  end;
+end;
 
 end.
 

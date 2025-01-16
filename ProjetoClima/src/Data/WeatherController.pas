@@ -10,6 +10,7 @@ type
   private
     FCity, FURL : String;
     Fresponse : String;
+    FResponseImage: TMemoryStream;
     function GetURL: String;
   public
     function ParseWithGrijjy: TWeatherModel;
@@ -57,31 +58,32 @@ end;
 
 procedure TWeatherController.SetURL(const URL: String);
 begin
-  FURL := URL; // Permite redefinir a URL diretamente
+  FURL := 'https:';
+  FURL := FURL + URL;
 end;
 
 procedure TWeatherController.GetImagem;
 var
   Request: TWeatherRequest;
 begin
+  FreeAndNil(FResponseImage);
+  FResponseImage := TMemoryStream.Create;
+
   Request := TWeatherRequest.Create(FURL);
   try
-    FResponse := Request.Get; // Realiza a requisição e salva a resposta
+    Request.GetImagem(FResponseImage);
   finally
     Request.Free;
   end;
 end;
 
 procedure TWeatherController.SaveResponseToStream(Stream: TStream);
-var
-  ResponseBytes: TBytes;
 begin
-  if not FResponse.IsEmpty then
+  if Assigned(FResponseImage) then
   begin
-    ResponseBytes := TEncoding.UTF8.GetBytes(FResponse);
-    Stream.WriteBuffer(ResponseBytes[0], Length(ResponseBytes));
+    FResponseImage.Position := 0;
+    Stream.CopyFrom(FResponseImage, FResponseImage.Size);
   end;
 end;
-
 end.
 
