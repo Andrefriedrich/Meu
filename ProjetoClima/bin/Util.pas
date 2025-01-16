@@ -1,9 +1,12 @@
 unit Util;
 
 interface
-
-function GetDirecaoVentoText(const Abbreviation: string): string;
-function FormatCityNameForURL(const CityName: string): string;
+  type
+  TUtil = class
+    public
+      class function GetDirecaoVentoText(const Abbreviation: string): string;
+      class function FormatCityNameForURL(const CityName: string): string;
+  end;
 
 implementation
 
@@ -34,13 +37,13 @@ begin
   Direcao.Add('NNW', 'Norte-Noroeste');
 end;
 
-function GetDirecaoVentoText(const Abbreviation: string): string;
+class function TUtil.GetDirecaoVentoText(const Abbreviation: string): string;
 begin
   if not Direcao.TryGetValue(Abbreviation, Result) then
     Result := 'Direção desconhecida';
 end;
 
-function FormatCityNameForURL(const CityName: string): string;
+class function TUtil.FormatCityNameForURL(const CityName: string): string;
 begin
   Result := TNetEncoding.URL.Encode(CityName);
 end;

@@ -153,8 +153,8 @@ end;
 procedure TWeatherModel.ProcessaJsonCondition(const AJson: TgoBsonDocument);
 begin
   Text        := AJson['text'].ToString();
-  Icon        := AJson['Icon'].ToString();
-  Code        := AJson['Code'].ToInteger();
+  Icon        := AJson['icon'].ToString();
+  Code        := AJson['code'].ToInteger();
 end;
 
 procedure TWeatherModel.ProcessaJsonCurrent(const AJson: TgoBsonDocument);
