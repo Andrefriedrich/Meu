@@ -19,7 +19,7 @@ type
     constructor Create(City : String);
 
     procedure GetImagem;
-    procedure SetURL(const URL: String);
+    procedure SetURLImagem(const URL: String);
     procedure SaveResponseToStream(Stream: TStream);
   end;
 
@@ -56,10 +56,9 @@ begin
   //Result := TWeatherModel.Create(Json);
 end;
 
-procedure TWeatherController.SetURL(const URL: String);
+procedure TWeatherController.SetURLImagem(const URL: String);
 begin
-  FURL := 'https:';
-  FURL := FURL + URL;
+  FURL := 'https:' + URL;
 end;
 
 procedure TWeatherController.GetImagem;

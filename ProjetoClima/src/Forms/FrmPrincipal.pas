@@ -13,14 +13,23 @@ uses
 type
   TFormPrincipal = class(TForm)
     edCidade: TcxTextEdit;
-    btnApagar: TcxButton;
-    memResultado: TcxMemo;
     btnBuscaComRestJson: TcxButton;
     btnBuscaComGrijjy: TcxButton;
     ImagemClima: TImage;
+    lbUltimaAtualizacao: TcxLabel;
+    lbTemperatura: TcxLabel;
+    lbClima: TcxLabel;
+    lbIndiceUV: TcxLabel;
+    lbDirecaoVento: TcxLabel;
+    edUltimaAtualizacao: TEdit;
+    edTemperatura: TEdit;
+    edClima: TEdit;
+    edIndiceUV: TEdit;
+    edDirecaoVento: TEdit;
+    cxLabel1: TcxLabel;
+    cxLabel2: TcxLabel;
     procedure btnBuscaComGrijjyClick(Sender: TObject);
     procedure btnBuscaComRestJsonClick(Sender: TObject);
-    procedure btnApagarClick(Sender: TObject);
   private
     procedure FazBusca(const UseGrijjy: Boolean);
     procedure OnWeatherError(const Msg: string);
@@ -66,7 +75,7 @@ begin
   PNGImage := TPngImage.Create;
   try
     try
-      WeatherController.SetURL(ImageURL);
+      WeatherController.SetURLImagem(ImageURL);
       WeatherController.GetImagem;
       WeatherController.SaveResponseToStream(MemoryStream);
       MemoryStream.Position := 0;
@@ -89,20 +98,18 @@ end;
 
 procedure TFormPrincipal.FazBusca(const UseGrijjy: Boolean);
 begin
-  memResultado.Clear;
-
-  if edCidade.Text = '' then
-  begin
-    memResultado.Lines.Add('Por favor, insira o nome da cidade!');
-    Exit;
-  end;
 
 end;
 
 procedure TFormPrincipal.MostraResultados(const WeatherData: Tweathermodel);
 begin
-  memResultado.Lines.Add('Ultima atualização de dados: ' + WeatherData.Localtime);
-  memResultado.Lines.Add('Cidade: ' + WeatherData.Name);
+  edUltimaAtualizacao.Text := WeatherData.Localtime;
+  edTemperatura.Text       := WeatherData.TempC.ToString;
+  edClima.Text             := WeatherData.Text;
+  edDirecaoVento.Text      := TUtil.GetDirecaoVentoText(WeatherData.wind_dir);
+  edIndiceUV.Text          := WeatherData.uv.ToString;
+
+ { memResultado.Lines.Add('Cidade: ' + WeatherData.Name);
   memResultado.Lines.Add('Região: ' + WeatherData.Region);
   memResultado.Lines.Add('País: ' + WeatherData.Country);
   memResultado.Lines.Add('Latitude: ' + WeatherData.Lat.ToString);
@@ -113,25 +120,18 @@ begin
   memResultado.Lines.Add('Direção do vento: ' + TUtil.GetDirecaoVentoText(WeatherData.wind_dir));
   memResultado.Lines.Add('Precipitação: ' + WeatherData.precip_mm.ToString);
   memResultado.Lines.Add('Humidade: ' + WeatherData.humidity.ToString);
-  memResultado.Lines.Add('Distancia de visão: ' + WeatherData.vis_km.ToString);
+  memResultado.Lines.Add('Distancia de visão: ' + WeatherData.vis_km.ToString + 'Km');
   memResultado.Lines.Add('Indice UV: ' + WeatherData.uv.ToString);
 
   memResultado.Lines.Add('Qualidade do ar');
   memResultado.Lines.Add('Monoxido de carbono: ' + WeatherData.co.ToString + 'm3');
   memResultado.Lines.Add('Ozonio: ' + WeatherData.o3.ToString + 'm3');
-  memResultado.Lines.Add('Dioxido de nidrogenio: ' + WeatherData.no2.ToString + 'm3');
-  memResultado.Lines.Add('link da imagem: '+ WeatherData.Icon);
+  memResultado.Lines.Add('Dioxido de nitrogenio: ' + WeatherData.no2.ToString + 'm3'); }
 end;
 
 procedure TFormPrincipal.OnWeatherError(const Msg: string);
 begin
-  memResultado.Lines.Add('Erro ao buscar dados: ' + Msg);
-end;
 
-procedure TFormPrincipal.btnApagarClick(Sender: TObject);
-begin
-  memResultado.Clear;
 end;
-
 end.
 

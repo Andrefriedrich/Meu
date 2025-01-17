@@ -1,8 +1,8 @@
 object FormPrincipal: TFormPrincipal
   Left = 0
   Top = 0
-  ClientHeight = 571
-  ClientWidth = 868
+  ClientHeight = 311
+  ClientWidth = 650
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -13,56 +13,183 @@ object FormPrincipal: TFormPrincipal
   PixelsPerInch = 96
   TextHeight = 13
   object ImagemClima: TImage
-    Left = 703
-    Top = 51
-    Width = 105
-    Height = 105
+    Left = 349
+    Top = 119
+    Width = 69
+    Height = 70
   end
   object edCidade: TcxTextEdit
-    Left = 136
-    Top = 51
+    Left = 212
+    Top = 29
     TabOrder = 0
-    Width = 121
-  end
-  object btnApagar: TcxButton
-    Left = 136
-    Top = 89
-    Width = 121
-    Height = 25
-    Caption = 'Apagar Resultado'
-    TabOrder = 1
-    OnClick = btnApagarClick
-  end
-  object memResultado: TcxMemo
-    Left = 278
-    Top = 51
-    ParentFont = False
-    Style.Font.Charset = DEFAULT_CHARSET
-    Style.Font.Color = clWindowText
-    Style.Font.Height = -19
-    Style.Font.Name = 'Tahoma'
-    Style.Font.Style = []
-    Style.IsFontAssigned = True
-    TabOrder = 2
-    Height = 494
-    Width = 419
+    Width = 206
   end
   object btnBuscaComRestJson: TcxButton
-    Left = 136
-    Top = 120
-    Width = 121
+    Left = 457
+    Top = 39
+    Width = 169
     Height = 25
-    Caption = 'BuscaComRestJson'
-    TabOrder = 3
+    Caption = 'Retorna dados com RestJson'
+    TabOrder = 1
     OnClick = btnBuscaComRestJsonClick
   end
   object btnBuscaComGrijjy: TcxButton
-    Left = 136
-    Top = 151
-    Width = 121
+    Left = 457
+    Top = 8
+    Width = 169
     Height = 25
-    Caption = 'BuscaComGrijjy'
-    TabOrder = 4
+    Caption = 'Retorna dados com Grijjy'
+    TabOrder = 2
     OnClick = btnBuscaComGrijjyClick
+  end
+  object lbUltimaAtualizacao: TcxLabel
+    Left = 24
+    Top = 86
+    Caption = 'Ultima atualiza'#231#227'o de dados:'
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Segoe UI'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+  end
+  object lbTemperatura: TcxLabel
+    Left = 24
+    Top = 176
+    Caption = 'Temperatura em '#176'C:'
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Segoe UI'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+  end
+  object lbClima: TcxLabel
+    Left = 24
+    Top = 114
+    Caption = 'Clima:'
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Segoe UI'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+  end
+  object lbIndiceUV: TcxLabel
+    Left = 215
+    Top = 177
+    Caption = 'Indice UV:'
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Segoe UI'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+  end
+  object lbDirecaoVento: TcxLabel
+    Left = 24
+    Top = 145
+    Caption = 'Dire'#231#227'o do vento:'
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Segoe UI'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+  end
+  object edUltimaAtualizacao: TEdit
+    Left = 231
+    Top = 91
+    Width = 187
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 8
+  end
+  object edTemperatura: TEdit
+    Left = 169
+    Top = 181
+    Width = 38
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 9
+  end
+  object edClima: TEdit
+    Left = 80
+    Top = 119
+    Width = 254
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 10
+  end
+  object edIndiceUV: TEdit
+    Left = 294
+    Top = 181
+    Width = 40
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 11
+  end
+  object edDirecaoVento: TEdit
+    Left = 157
+    Top = 149
+    Width = 177
+    Height = 21
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 12
+  end
+  object cxLabel1: TcxLabel
+    Left = 24
+    Top = 25
+    Caption = 'Digite o nome da cidade:'
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Tahoma'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+  end
+  object cxLabel2: TcxLabel
+    Left = -8
+    Top = 61
+    Caption = 
+      '________________________________________________________________' +
+      '________________________________________________________________' +
+      '_'
   end
 end
