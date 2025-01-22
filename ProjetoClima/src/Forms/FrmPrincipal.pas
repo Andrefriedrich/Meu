@@ -58,8 +58,8 @@ begin
     if Assigned(WeatherData) then
     begin
       MostraResultados(WeatherData);
-      if not WeatherData.Icon.IsEmpty then
-        DownloadAndDisplayImageWithController(WeatherController, WeatherData.Icon);
+      if not  WeatherData.Current.Condition.Icon.IsEmpty then
+        DownloadAndDisplayImageWithController(WeatherController, WeatherData.Current.Condition.Icon);
     end;
   finally
     WeatherController.Free;
@@ -103,11 +103,11 @@ end;
 
 procedure TFormPrincipal.MostraResultados(const WeatherData: Tweathermodel);
 begin
-  edUltimaAtualizacao.Text := WeatherData.Localtime;
-  edTemperatura.Text       := WeatherData.TempC.ToString;
-  edClima.Text             := WeatherData.Text;
-  edDirecaoVento.Text      := TUtil.GetDirecaoVentoText(WeatherData.wind_dir);
-  edIndiceUV.Text          := WeatherData.uv.ToString;
+  edUltimaAtualizacao.Text := WeatherData.Location.LocalTime;
+  edTemperatura.Text       := WeatherData.Current.TempC.ToString;
+  edClima.Text             := WeatherData.Current.Condition.Text;
+  edDirecaoVento.Text      := TUtil.GetDirecaoVentoText(WeatherData.Current.WindDir);
+  edIndiceUV.Text          := WeatherData.Current.UV.ToString;
 
  { memResultado.Lines.Add('Cidade: ' + WeatherData.Name);
   memResultado.Lines.Add('Região: ' + WeatherData.Region);

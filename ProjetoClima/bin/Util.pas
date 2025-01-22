@@ -50,5 +50,8 @@ end;
 
 initialization
   InitializeDirecao;
+
+finalization
+  Direcao.Free;
 end.
 
