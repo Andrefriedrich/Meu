@@ -131,7 +131,7 @@ type
   private
     FLocation: TLocation;
     FCurrent: TCurrent;
-    procedure CarregarJson(var AJsonFile: string);
+    procedure CarregarJson(var AJsonFileString: string);
     procedure ProcessaJsonLocation(const AJson: TgoBsonDocument);
     procedure ProcessaJsonCurrent(const AJson: TgoBsonDocument);
     procedure ProcessaJsonCondition(const AJson: TgoBsonDocument);
@@ -173,14 +173,14 @@ begin
   inherited;
 end;
 
-procedure TWeatherModel.CarregarJson(var AJsonFile: string);
+procedure TWeatherModel.CarregarJson(var AJsonFileString: string);
 var
   AJsonDocument, AJsonLocation, AJsonCurrent, AJsonCondition, AJsonAirQuality: TgoBsonDocument;
 begin
-  if IsUTF8String(AJsonFile) then
-    AJsonFile := UTF8Decode(AJsonFile);
+  if IsUTF8String(AJsonFileString) then
+    AJsonFileString := UTF8Decode(AJsonFileString);
 
-  if TgoBsonDocument.TryParse(AJsonFile, AJsonDocument) then
+  if TgoBsonDocument.TryParse(AJsonFileString, AJsonDocument) then
   begin
     if AJsonDocument.Contains('location') then
       if TgoBsonDocument.TryParse(AJsonDocument['location'].AsBsonDocument.ToJson, AJsonLocation) then

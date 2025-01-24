@@ -3,7 +3,7 @@ unit WeatherController;
 interface
 
 uses
-  System.SysUtils, WeatherModel, WeatherRequestThread, System.Classes;
+  System.SysUtils, WeatherModel, WeatherRequestThread, System.Classes, rest.Json;
 
 type
   TWeatherController = class
@@ -17,10 +17,6 @@ type
     function ParseWithRestJson: TWeatherModel;
     Procedure Get;
     constructor Create(City : String);
-
-    procedure GetImagem;
-    procedure SetURLImagem(const URL: String);
-    procedure SaveResponseToStream(Stream: TStream);
   end;
 
 implementation
@@ -53,36 +49,8 @@ end;
 
 function TWeatherController.ParseWithRestJson: TWeatherModel;
 begin
-  //Result := TWeatherModel.Create(Json);
+  Result := TJson.JsonToObject<TWeatherModel>(FResponse);
 end;
 
-procedure TWeatherController.SetURLImagem(const URL: String);
-begin
-  FURL := 'https:' + URL;
-end;
-
-procedure TWeatherController.GetImagem;
-var
-  Request: TWeatherRequest;
-begin
-  FreeAndNil(FResponseImage);
-  FResponseImage := TMemoryStream.Create;
-
-  Request := TWeatherRequest.Create(FURL);
-  try
-    Request.GetImagem(FResponseImage);
-  finally
-    Request.Free;
-  end;
-end;
-
-procedure TWeatherController.SaveResponseToStream(Stream: TStream);
-begin
-  if Assigned(FResponseImage) then
-  begin
-    FResponseImage.Position := 0;
-    Stream.CopyFrom(FResponseImage, FResponseImage.Size);
-  end;
-end;
 end.
 

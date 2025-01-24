@@ -8,7 +8,7 @@ uses
   cxLookAndFeelPainters, cxContainer, cxEdit, cxLabel, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, Vcl.Menus, Vcl.StdCtrls, cxButtons,
   Vcl.ExtCtrls, WeatherRequestThread, WeatherController, WeatherModel,
-  cxMemo, Util, Vcl.Imaging.pngimage;
+  cxMemo, Util, Vcl.Imaging.pngimage, rest.Json;
 
 type
   TFormPrincipal = class(TForm)
@@ -31,11 +31,9 @@ type
     procedure btnBuscaComGrijjyClick(Sender: TObject);
     procedure btnBuscaComRestJsonClick(Sender: TObject);
   private
-    procedure FazBusca(const UseGrijjy: Boolean);
     procedure OnWeatherError(const Msg: string);
     procedure MostraResultados(const WeatherData: Tweathermodel);
-    procedure DownloadAndDisplayImageWithController(
-      WeatherController: TWeatherController; const ImageURL: string);
+    procedure DownloadAndDisplayImage(const ImageURL: string);
   public
   end;
 
@@ -59,14 +57,15 @@ begin
     begin
       MostraResultados(WeatherData);
       if not  WeatherData.Current.Condition.Icon.IsEmpty then
-        DownloadAndDisplayImageWithController(WeatherController, WeatherData.Current.Condition.Icon);
+        DownloadAndDisplayImage(WeatherData.Current.Condition.Icon);
     end;
   finally
+    WeatherData.Free;
     WeatherController.Free;
   end;
 end;
 
-procedure TFormPrincipal.DownloadAndDisplayImageWithController(WeatherController: TWeatherController; const ImageURL: string);
+procedure TFormPrincipal.DownloadAndDisplayImage(const ImageURL: string);
 var
   MemoryStream: TMemoryStream;
   PNGImage: TPngImage;
@@ -75,11 +74,11 @@ begin
   PNGImage := TPngImage.Create;
   try
     try
-      WeatherController.SetURLImagem(ImageURL);
-      WeatherController.GetImagem;
-      WeatherController.SaveResponseToStream(MemoryStream);
+      TUtil.GetImagem(ImageURL, MemoryStream);
+
       MemoryStream.Position := 0;
       PNGImage.LoadFromStream(MemoryStream);
+
       ImagemClima.Picture.Assign(PNGImage);
     except
       on E: Exception do
@@ -92,13 +91,27 @@ begin
 end;
 
 procedure TFormPrincipal.btnBuscaComRestJsonClick(Sender: TObject);
+var
+  WeatherData: TWeatherModel;
+  WeatherController: TWeatherController;
+  Json: TJson;
 begin
-  FazBusca(False); // entra aqui usa Rest.Json
-end;
+  WeatherController := TWeatherController.Create(TUtil.FormatCityNameForURL(edCidade.Text));
+  try
+    WeatherController.Get;
+    WeatherData := WeatherController.ParseWithRestJson;
 
-procedure TFormPrincipal.FazBusca(const UseGrijjy: Boolean);
-begin
+    if Assigned(WeatherData) then
+    begin
+      MostraResultados(WeatherData);
 
+      if not WeatherData.Current.Condition.Icon.IsEmpty then
+        DownloadAndDisplayImage(WeatherData.Current.Condition.Icon);
+    end;
+  finally
+    WeatherData.Free;
+    WeatherController.Free;
+  end;
 end;
 
 procedure TFormPrincipal.MostraResultados(const WeatherData: Tweathermodel);
@@ -108,25 +121,6 @@ begin
   edClima.Text             := WeatherData.Current.Condition.Text;
   edDirecaoVento.Text      := TUtil.GetDirecaoVentoText(WeatherData.Current.WindDir);
   edIndiceUV.Text          := WeatherData.Current.UV.ToString;
-
- { memResultado.Lines.Add('Cidade: ' + WeatherData.Name);
-  memResultado.Lines.Add('Região: ' + WeatherData.Region);
-  memResultado.Lines.Add('País: ' + WeatherData.Country);
-  memResultado.Lines.Add('Latitude: ' + WeatherData.Lat.ToString);
-  memResultado.Lines.Add('Longitude: ' + WeatherData.Lon.ToString);
-  memResultado.Lines.Add('Temperatura: ' + WeatherData.TempC.ToString);
-  memResultado.Lines.Add('Clima: ' + WeatherData.Text);
-  memResultado.Lines.Add('Vento em km/h: ' + WeatherData.wind_kph.ToString);
-  memResultado.Lines.Add('Direção do vento: ' + TUtil.GetDirecaoVentoText(WeatherData.wind_dir));
-  memResultado.Lines.Add('Precipitação: ' + WeatherData.precip_mm.ToString);
-  memResultado.Lines.Add('Humidade: ' + WeatherData.humidity.ToString);
-  memResultado.Lines.Add('Distancia de visão: ' + WeatherData.vis_km.ToString + 'Km');
-  memResultado.Lines.Add('Indice UV: ' + WeatherData.uv.ToString);
-
-  memResultado.Lines.Add('Qualidade do ar');
-  memResultado.Lines.Add('Monoxido de carbono: ' + WeatherData.co.ToString + 'm3');
-  memResultado.Lines.Add('Ozonio: ' + WeatherData.o3.ToString + 'm3');
-  memResultado.Lines.Add('Dioxido de nitrogenio: ' + WeatherData.no2.ToString + 'm3'); }
 end;
 
 procedure TFormPrincipal.OnWeatherError(const Msg: string);

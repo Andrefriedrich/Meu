@@ -1,20 +1,28 @@
 unit Util;
 
 interface
+
+uses
+  System.Generics.Collections, System.NetEncoding, WeatherRequestThread, System.Classes,
+  system.SysUtils;
+
   type
   TUtil = class
-    public
-      class function GetDirecaoVentoText(const Abbreviation: string): string;
-      class function FormatCityNameForURL(const CityName: string): string;
+  private
+    class procedure SetURLImagem(const URL: String); static;
+  public
+    class function GetDirecaoVentoText(const Abbreviation: string): string;
+    class function FormatCityNameForURL(const CityName: string): string;
+    class procedure GetImagem(const aURL: string; AResponseStream: TStream);
+    class procedure SaveResponseToStream(AResponseStream: TStream; const DestStream: TStream);
   end;
 
 implementation
 
-uses
-  System.Generics.Collections, System.NetEncoding;
-
 var
   Direcao: TDictionary<string, string>;
+  FResponseImage: TMemoryStream;
+  FURL : String;
 
 procedure InitializeDirecao;
 begin
@@ -46,6 +54,39 @@ end;
 class function TUtil.FormatCityNameForURL(const CityName: string): string;
 begin
   Result := TNetEncoding.URL.Encode(CityName);
+end;
+
+class procedure TUtil.GetImagem(const aURL: string; AResponseStream: TStream);
+var
+  Request: TWeatherRequest;
+begin
+  if Assigned(AResponseStream) then
+  begin
+    SetURLImagem(aURL);
+    Request := TWeatherRequest.Create(FURL);
+    try
+      Request.GetImagem(AResponseStream);
+    finally
+      Request.Free;
+    end;
+  end;
+end;
+
+class procedure TUtil.SaveResponseToStream(AResponseStream: TStream;
+  const DestStream: TStream);
+begin
+  if Assigned(AResponseStream) and Assigned(DestStream) then
+  begin
+    AResponseStream.Position := 0;
+    DestStream.CopyFrom(AResponseStream, AResponseStream.Size);
+  end
+  else
+    raise Exception.Create('SaveResponseToStream deu pau');
+end;
+
+class procedure TUtil.SetURLImagem(const URL: String);
+begin
+  FURL := 'https:' + URL;
 end;
 
 initialization
