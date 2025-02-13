@@ -14,7 +14,7 @@ object FormPrincipal: TFormPrincipal
   TextHeight = 13
   object ImagemClima: TImage
     Left = 349
-    Top = 119
+    Top = 148
     Width = 69
     Height = 70
   end
@@ -44,7 +44,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbUltimaAtualizacao: TcxLabel
     Left = 24
-    Top = 86
+    Top = 115
     Caption = 'Ultima atualiza'#231#227'o de dados:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -56,7 +56,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbTemperatura: TcxLabel
     Left = 24
-    Top = 176
+    Top = 205
     Caption = 'Temperatura em '#176'C:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -68,7 +68,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbClima: TcxLabel
     Left = 24
-    Top = 114
+    Top = 143
     Caption = 'Clima:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -80,7 +80,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbIndiceUV: TcxLabel
     Left = 215
-    Top = 177
+    Top = 206
     Caption = 'Indice UV:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -92,7 +92,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbDirecaoVento: TcxLabel
     Left = 24
-    Top = 145
+    Top = 174
     Caption = 'Dire'#231#227'o do vento:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -104,9 +104,10 @@ object FormPrincipal: TFormPrincipal
   end
   object edUltimaAtualizacao: TEdit
     Left = 231
-    Top = 91
+    Top = 120
     Width = 187
     Height = 21
+    Color = clScrollBar
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -118,9 +119,10 @@ object FormPrincipal: TFormPrincipal
   end
   object edTemperatura: TEdit
     Left = 169
-    Top = 181
+    Top = 210
     Width = 38
     Height = 21
+    Color = clScrollBar
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -132,9 +134,10 @@ object FormPrincipal: TFormPrincipal
   end
   object edClima: TEdit
     Left = 80
-    Top = 119
+    Top = 148
     Width = 254
     Height = 21
+    Color = clScrollBar
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -146,9 +149,10 @@ object FormPrincipal: TFormPrincipal
   end
   object edIndiceUV: TEdit
     Left = 294
-    Top = 181
+    Top = 210
     Width = 40
     Height = 21
+    Color = clScrollBar
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -160,9 +164,10 @@ object FormPrincipal: TFormPrincipal
   end
   object edDirecaoVento: TEdit
     Left = 157
-    Top = 149
+    Top = 178
     Width = 177
     Height = 21
+    Color = clScrollBar
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -11
@@ -186,10 +191,37 @@ object FormPrincipal: TFormPrincipal
   end
   object cxLabel2: TcxLabel
     Left = -8
-    Top = 61
+    Top = 91
     Caption = 
       '________________________________________________________________' +
       '________________________________________________________________' +
       '_'
+  end
+  object edPais: TEdit
+    Left = 212
+    Top = 64
+    Width = 206
+    Height = 21
+    Color = clScrollBar
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Consolas'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    TabOrder = 15
+  end
+  object cxLabel3: TcxLabel
+    Left = 168
+    Top = 62
+    Caption = 'Pa'#237's:'
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Tahoma'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
   end
 end

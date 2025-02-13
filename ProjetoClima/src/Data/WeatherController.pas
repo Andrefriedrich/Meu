@@ -27,11 +27,17 @@ begin
 end;
 
 procedure TWeatherController.Get;
-  var Request : TWeatherRequest;
+  var
+    Request: TWeatherRequest;
 begin
   Request := TWeatherRequest.Create(GetURL);
   try
-    FResponse := Request.Get;
+    try
+      FResponse := Request.Get;
+    except
+      on E: Exception do
+        raise Exception.Create('Erro ao executar o GET: ' + E.Message);
+    end;
   finally
     Request.Free;
   end;

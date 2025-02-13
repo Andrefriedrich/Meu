@@ -40,20 +40,20 @@ type
 
   TCurrent = class
   private
-    FLastUpdatedEpoch: Int64;
-    FLastUpdated: string;
-    FTempC: Double;
-    FTempF: Double;
-    FIsDay: Integer;
+    FLast_Updated_Epoch: Int64;
+    FLast_Updated: string;
+    FTemp_C: Double;
+    FTemp_F: Double;
+    FIs_Day: Integer;
     FCondition: TCondition;
-    FWindMph: Double;
-    FWindKph: Double;
-    FWindDegree: Integer;
-    FWindDir: string;
-    FPressureMb: Double;
-    FPressureIn: Double;
-    FPrecipMm: Double;
-    FPrecipIn: Double;
+    FWind_Mph: Double;
+    FWind_Kph: Double;
+    FWind_Degree: Integer;
+    FWind_Dir: string;
+    FPressure_Mb: Double;
+    FPressure_In: Double;
+    FPrecip_Mm: Double;
+    FPrecip_In: Double;
     FHumidity: Integer;
     FCloud: Integer;
     FFeelsLikeC: Double;
@@ -69,38 +69,38 @@ type
     FUV: Double;
     FGustMph: Double;
     FGustKph: Double;
-    FAirQuality: TAirQuality;
+    FAir_Quality: TAirQuality;
   public
-    property LastUpdatedEpoch: Int64 read FLastUpdatedEpoch write FLastUpdatedEpoch;
-    property LastUpdated: string     read FLastUpdated      write FLastUpdated;
-    property TempC: Double           read FTempC            write FTempC;
-    property TempF: Double           read FTempF            write FTempF;
-    property IsDay: Integer          read FIsDay            write FIsDay;
-    property Condition: TCondition   read FCondition        write FCondition;
-    property WindMph: Double         read FWindMph          write FWindMph;
-    property WindKph: Double         read FWindKph          write FWindKph;
-    property WindDegree: Integer     read FWindDegree       write FWindDegree;
-    property WindDir: string         read FWindDir          write FWindDir;
-    property PressureMb: Double      read FPressureMb       write FPressureMb;
-    property PressureIn: Double      read FPressureIn       write FPressureIn;
-    property PrecipMm: Double        read FPrecipMm         write FPrecipMm;
-    property PrecipIn: Double        read FPrecipIn         write FPrecipIn;
-    property Humidity: Integer       read FHumidity         write FHumidity;
-    property Cloud: Integer          read FCloud            write FCloud;
-    property FeelsLikeC: Double      read FFeelsLikeC       write FFeelsLikeC;
-    property FeelsLikeF: Double      read FFeelsLikeF       write FFeelsLikeF;
-    property WindChillC: Double      read FWindChillC       write FWindChillC;
-    property WindChillF: Double      read FWindChillF       write FWindChillF;
-    property HeatIndexC: Double      read FHeatIndexC       write FHeatIndexC;
-    property HeatIndexF: Double      read FHeatIndexF       write FHeatIndexF;
-    property DewPointC: Double       read FDewPointC        write FDewPointC;
-    property DewPointF: Double       read FDewPointF        write FDewPointF;
-    property VisKm: Double           read FVisKm            write FVisKm;
-    property VisMiles: Double        read FVisMiles         write FVisMiles;
-    property UV: Double              read FUV               write FUV;
-    property GustMph: Double         read FGustMph          write FGustMph;
-    property GustKph: Double         read FGustKph          write FGustKph;
-    property AirQuality: TAirQuality read FAirQuality       write FAirQuality;
+    property LastUpdatedEpoch: Int64 read FLast_Updated_Epoch write FLast_Updated_Epoch;
+    property LastUpdated: string     read FLast_Updated       write FLast_Updated;
+    property TempC: Double           read FTemp_C             write FTemp_C;
+    property TempF: Double           read FTemp_F             write FTemp_F;
+    property IsDay: Integer          read FIs_Day             write FIs_Day;
+    property Condition: TCondition   read FCondition          write FCondition;
+    property WindMph: Double         read FWind_Mph           write FWind_Mph;
+    property WindKph: Double         read FWind_Kph           write FWind_Kph;
+    property WindDegree: Integer     read FWind_Degree        write FWind_Degree;
+    property WindDir: string         read FWind_Dir           write FWind_Dir;
+    property PressureMb: Double      read FPressure_Mb        write FPressure_Mb;
+    property PressureIn: Double      read FPressure_In        write FPressure_In;
+    property PrecipMm: Double        read FPrecip_Mm          write FPrecip_Mm;
+    property PrecipIn: Double        read FPrecip_In          write FPrecip_In;
+    property Humidity: Integer       read FHumidity           write FHumidity;
+    property Cloud: Integer          read FCloud              write FCloud;
+    property FeelsLikeC: Double      read FFeelsLikeC         write FFeelsLikeC;
+    property FeelsLikeF: Double      read FFeelsLikeF         write FFeelsLikeF;
+    property WindChillC: Double      read FWindChillC         write FWindChillC;
+    property WindChillF: Double      read FWindChillF         write FWindChillF;
+    property HeatIndexC: Double      read FHeatIndexC         write FHeatIndexC;
+    property HeatIndexF: Double      read FHeatIndexF         write FHeatIndexF;
+    property DewPointC: Double       read FDewPointC          write FDewPointC;
+    property DewPointF: Double       read FDewPointF          write FDewPointF;
+    property VisKm: Double           read FVisKm              write FVisKm;
+    property VisMiles: Double        read FVisMiles           write FVisMiles;
+    property UV: Double              read FUV                 write FUV;
+    property GustMph: Double         read FGustMph            write FGustMph;
+    property GustKph: Double         read FGustKph            write FGustKph;
+    property AirQuality: TAirQuality read FAir_Quality        write FAir_Quality;
 
     constructor Create;
     destructor Destroy; override;
@@ -149,13 +149,13 @@ implementation
 constructor TCurrent.Create;
 begin
   FCondition  := TCondition.Create;
-  FAirQuality := TAirQuality.Create;
+  FAir_Quality := TAirQuality.Create;
 end;
 
 destructor TCurrent.Destroy;
 begin
   FCondition.Free;
-  FAirQuality.Free;
+  FAir_Quality.Free;
   inherited;
 end;
 
@@ -214,14 +214,14 @@ end;
 
 procedure TWeatherModel.ProcessaJsonAirQuality(const AJson: TgoBsonDocument);
 begin
-  FCurrent.FAirQuality.CO           := AJson['co'].ToDouble();
-  FCurrent.FAirQuality.NO2          := AJson['no2'].ToDouble();
-  FCurrent.FAirQuality.O3           := AJson['o3'].ToDouble();
-  FCurrent.FAirQuality.SO2          := AJson['so2'].ToDouble();
-  FCurrent.FAirQuality.PM2_5        := AJson['pm2_5'].ToDouble();
-  FCurrent.FAirQuality.PM10         := AJson['pm10'].ToDouble();
-  FCurrent.FAirQuality.USEPAIndex   := AJson['us-epa-index'].ToInteger();
-  FCurrent.FAirQuality.GBDefraIndex := AJson['gb-defra-index'].ToInteger();
+  FCurrent.FAir_Quality.CO           := AJson['co'].ToDouble();
+  FCurrent.FAir_Quality.NO2          := AJson['no2'].ToDouble();
+  FCurrent.FAir_Quality.O3           := AJson['o3'].ToDouble();
+  FCurrent.FAir_Quality.SO2          := AJson['so2'].ToDouble();
+  FCurrent.FAir_Quality.PM2_5        := AJson['pm2_5'].ToDouble();
+  FCurrent.FAir_Quality.PM10         := AJson['pm10'].ToDouble();
+  FCurrent.FAir_Quality.USEPAIndex   := AJson['us-epa-index'].ToInteger();
+  FCurrent.FAir_Quality.GBDefraIndex := AJson['gb-defra-index'].ToInteger();
 end;
 
 procedure TWeatherModel.ProcessaJsonCurrent(const AJson: TgoBsonDocument);

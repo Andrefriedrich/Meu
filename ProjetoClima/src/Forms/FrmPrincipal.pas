@@ -28,10 +28,11 @@ type
     edDirecaoVento: TEdit;
     cxLabel1: TcxLabel;
     cxLabel2: TcxLabel;
+    edPais: TEdit;
+    cxLabel3: TcxLabel;
     procedure btnBuscaComGrijjyClick(Sender: TObject);
     procedure btnBuscaComRestJsonClick(Sender: TObject);
   private
-    procedure OnWeatherError(const Msg: string);
     procedure MostraResultados(const WeatherData: Tweathermodel);
     procedure DownloadAndDisplayImage(const ImageURL: string);
   public
@@ -76,10 +77,14 @@ begin
     try
       TUtil.GetImagem(ImageURL, MemoryStream);
 
-      MemoryStream.Position := 0;
-      PNGImage.LoadFromStream(MemoryStream);
-
-      ImagemClima.Picture.Assign(PNGImage);
+      if MemoryStream.Size > 0 then
+      begin
+        MemoryStream.Position := 0;
+        PNGImage.LoadFromStream(MemoryStream);
+        ImagemClima.Picture.Assign(PNGImage);
+      end
+      else
+        ShowMessage('Erro: imagem não carregou.');
     except
       on E: Exception do
         ShowMessage('Erro ao baixar a imagem: ' + E.Message);
@@ -90,11 +95,11 @@ begin
   end;
 end;
 
+
 procedure TFormPrincipal.btnBuscaComRestJsonClick(Sender: TObject);
 var
   WeatherData: TWeatherModel;
   WeatherController: TWeatherController;
-  Json: TJson;
 begin
   WeatherController := TWeatherController.Create(TUtil.FormatCityNameForURL(edCidade.Text));
   try
@@ -117,15 +122,12 @@ end;
 procedure TFormPrincipal.MostraResultados(const WeatherData: Tweathermodel);
 begin
   edUltimaAtualizacao.Text := WeatherData.Location.LocalTime;
+  edPais.Text              := WeatherData.Location.Country;
   edTemperatura.Text       := WeatherData.Current.TempC.ToString;
   edClima.Text             := WeatherData.Current.Condition.Text;
   edDirecaoVento.Text      := TUtil.GetDirecaoVentoText(WeatherData.Current.WindDir);
   edIndiceUV.Text          := WeatherData.Current.UV.ToString;
 end;
 
-procedure TFormPrincipal.OnWeatherError(const Msg: string);
-begin
-
-end;
 end.
 
