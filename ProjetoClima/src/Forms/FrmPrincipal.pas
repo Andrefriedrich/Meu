@@ -7,8 +7,8 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, cxGraphics, cxControls, cxLookAndFeels,
   cxLookAndFeelPainters, cxContainer, cxEdit, cxLabel, cxTextEdit, cxMaskEdit,
   cxDropDownEdit, Vcl.Menus, Vcl.StdCtrls, cxButtons,
-  Vcl.ExtCtrls, WeatherRequestThread, WeatherController, WeatherModel,
-  cxMemo, Util, Vcl.Imaging.pngimage, rest.Json;
+  Vcl.ExtCtrls, WeatherRequestThread, WeatherController, WeatherModel, Util,
+  Vcl.Imaging.pngimage, uFrmJsonEditor;
 
 type
   TFormPrincipal = class(TForm)
@@ -30,8 +30,11 @@ type
     cxLabel2: TcxLabel;
     edPais: TEdit;
     cxLabel3: TcxLabel;
+    cxLabel4: TcxLabel;
+    btnExibirJson: TcxButton;
     procedure btnBuscaComGrijjyClick(Sender: TObject);
     procedure btnBuscaComRestJsonClick(Sender: TObject);
+    procedure btnExibirJsonClick(Sender: TObject);
   private
     procedure MostraResultados(const WeatherData: Tweathermodel);
     procedure DownloadAndDisplayImage(const ImageURL: string);
@@ -117,6 +120,11 @@ begin
     WeatherData.Free;
     WeatherController.Free;
   end;
+end;
+
+procedure TFormPrincipal.btnExibirJsonClick(Sender: TObject);
+begin
+  //chamada para frmjsoneditor
 end;
 
 procedure TFormPrincipal.MostraResultados(const WeatherData: Tweathermodel);

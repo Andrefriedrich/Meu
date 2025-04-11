@@ -50,7 +50,7 @@ end;
 
 function TWeatherController.ParseWithGrijjy: TWeatherModel;
 begin
-  Result := TWeatherModel.Create(FResponse);
+  Result := TWeatherModel.Create;
 end;
 
 function TWeatherController.ParseWithRestJson: TWeatherModel;
