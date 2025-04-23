@@ -10,6 +10,8 @@ object FormPrincipal: TFormPrincipal
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   PixelsPerInch = 96
   TextHeight = 13
   object ImagemClima: TImage
@@ -40,7 +42,6 @@ object FormPrincipal: TFormPrincipal
     Height = 25
     Caption = 'Grijjy'
     TabOrder = 2
-    OnClick = btnBuscaComGrijjyClick
   end
   object lbUltimaAtualizacao: TcxLabel
     Left = 24
@@ -224,7 +225,7 @@ object FormPrincipal: TFormPrincipal
     Style.Font.Style = []
     Style.IsFontAssigned = True
   end
-  object cxLabel4: TcxLabel
+  object lbStatus: TcxLabel
     Left = 171
     Top = 8
     Caption = 'Consulte o clima da cidade!'

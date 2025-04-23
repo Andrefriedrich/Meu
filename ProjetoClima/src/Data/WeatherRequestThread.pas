@@ -6,14 +6,19 @@ uses
   System.Classes, System.SysUtils;
 
 type
-  TWeatherRequest = class
+  TWeatherRequestThread = class(TThread)
   private
     FURL: string;
-
+    FResponseContent: string;
+    FErrorMessage: string;
+    FSuccess: Boolean;
+  protected
+    procedure Execute; override;
   public
-    function Get : String;
-    procedure GetImagem(Stream: TStream);
-    constructor Create(const URL: string);
+    constructor Create(CreateSuspended: Boolean; const AURL: string);
+    property ResponseContent: string read FResponseContent;
+    property ErrorMessage: string read FErrorMessage;
+    property Success: Boolean read FSuccess;
   end;
 
 implementation
@@ -21,42 +26,41 @@ implementation
 uses
   IdHTTP;
 
-{ TWeatherRequestThread }
-
-constructor TWeatherRequest.Create(const URL: string);
+constructor TWeatherRequestThread.Create(CreateSuspended: Boolean; const AURL: string);
 begin
-  FURL := URL;
+  inherited Create(CreateSuspended);
+  Self.FreeOnTerminate := True;
+
+  FURL             := AURL;
+  FSuccess         := False;
+  FResponseContent := '';
+  FErrorMessage    := '';
 end;
 
-function TWeatherRequest.Get: String;
+procedure TWeatherRequestThread.Execute;
 var
-  HTTP: TIdHTTP;
+  LHttp: TIdHTTP;
 begin
-  Result := '';
-  HTTP   := TIdHTTP.Create(nil);
+  LHttp := TIdHTTP.Create(nil);
   try
     try
-      Result := HTTP.Get(FURL);
+      if Self.Terminated then
+        Exit;
+
+      FResponseContent := LHttp.Get(FURL);
+      FSuccess         := True;
+      FErrorMessage    := '';
     except
-//      on E: Exception do
-  //      FErrorMsg := E.Message;
+      on E: Exception do
+      begin
+        FSuccess         := False;
+        FErrorMessage    := E.Message;
+        FResponseContent := '';
+      end;
     end;
   finally
-    HTTP.Free;
-  end;
-end;
-
-procedure TWeatherRequest.GetImagem(Stream: TStream);
-var
-  HttpClient: TIdHTTP;
-begin
-  HttpClient := TIdHTTP.Create;
-  try
-    HttpClient.Get(FURL, Stream);
-  finally
-    HttpClient.Free;
+    LHttp.Free;
   end;
 end;
 
 end.
-

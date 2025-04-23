@@ -57,19 +57,8 @@ begin
 end;
 
 class procedure TUtil.GetImagem(const aURL: string; AResponseStream: TStream);
-var
-  Request: TWeatherRequest;
 begin
-  if Assigned(AResponseStream) then
-  begin
-    SetURLImagem(aURL);
-    Request := TWeatherRequest.Create(FURL);
-    try
-      Request.GetImagem(AResponseStream);
-    finally
-      Request.Free;
-    end;
-  end;
+
 end;
 
 class procedure TUtil.SaveResponseToStream(AResponseStream: TStream;
