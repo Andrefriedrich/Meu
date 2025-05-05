@@ -18,7 +18,6 @@ object FrmJsonEditor: TFrmJsonEditor
     Top = 0
     Align = alTop
     TabOrder = 0
-    ExplicitWidth = 633
     Height = 537
     Width = 635
   end
@@ -29,10 +28,6 @@ object FrmJsonEditor: TFrmJsonEditor
     Height = 59
     Align = alClient
     TabOrder = 1
-    ExplicitLeft = 248
-    ExplicitTop = 547
-    ExplicitWidth = 185
-    ExplicitHeight = 41
     object btnSalvar: TcxButton
       Left = 32
       Top = 16
@@ -40,6 +35,11 @@ object FrmJsonEditor: TFrmJsonEditor
       Height = 25
       Caption = 'Salvar'
       TabOrder = 0
+      OnClick = btnSalvarClick
     end
+  end
+  object SaveDialog: TSaveDialog
+    Left = 440
+    Top = 545
   end
 end

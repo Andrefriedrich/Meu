@@ -42,6 +42,7 @@ object FormPrincipal: TFormPrincipal
     Height = 25
     Caption = 'Grijjy'
     TabOrder = 2
+    OnClick = btnBuscaComGrijjyClick
   end
   object lbUltimaAtualizacao: TcxLabel
     Left = 24
@@ -226,8 +227,8 @@ object FormPrincipal: TFormPrincipal
     Style.IsFontAssigned = True
   end
   object lbStatus: TcxLabel
-    Left = 171
-    Top = 8
+    Left = 24
+    Top = 16
     Caption = 'Consulte o clima da cidade!'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET

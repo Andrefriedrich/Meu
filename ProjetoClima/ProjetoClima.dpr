@@ -10,6 +10,7 @@ uses
   uFrmJsonEditor in 'Forms\uFrmJsonEditor.pas' {FrmJsonEditor},
   HttpServiceIntf in 'Models\HttpServiceIntf.pas',
   RestJson.JsonParser in 'JSON\RestJson.JsonParser.pas',
+  Grijjy.JsonParser in 'JSON\Grijjy.JsonParser.pas',
   JsonParserIntf in 'JSON\JsonParserIntf.pas';
 
 {$R *.res}

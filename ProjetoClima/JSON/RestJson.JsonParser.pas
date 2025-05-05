@@ -14,6 +14,7 @@ type
     function ParseWeatherData(const AJson: string): TWeatherModel;
     function SerializeWeatherData(const AWeatherData: TWeatherModel): string;
     function GetLastError: string;
+    function GetParserName: string;
   end;
 
 implementation
@@ -77,4 +78,8 @@ begin
   end;
 end;
 
+function TRestJsonParser.GetParserName: string;
+begin
+  Result := 'TRestJsonParser';
+end;
 end.
