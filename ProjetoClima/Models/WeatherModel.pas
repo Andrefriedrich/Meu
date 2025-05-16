@@ -143,29 +143,27 @@ implementation
 
 constructor TCurrent.Create;
 begin
-  FCondition  := TCondition.Create;
+  inherited Create;
+  FCondition   := TCondition.Create;
   FAir_Quality := TAirQuality.Create;
 end;
-
 destructor TCurrent.Destroy;
 begin
-  FCondition.Free;
-  FAir_Quality.Free;
-  inherited;
+  FreeAndNil(FAir_Quality);
+  FreeAndNil(FCondition);
+  inherited Destroy;
 end;
-
 constructor TWeatherModel.Create;
 begin
+  inherited Create;
   FLocation := TLocation.Create;
   FCurrent  := TCurrent.Create;
 end;
-
 destructor TWeatherModel.Destroy;
 begin
-  FLocation.Free;
-  FCurrent.Free;
-  inherited;
+  FreeAndNil(FCurrent);
+  FreeAndNil(FLocation);
+  inherited Destroy;
 end;
-
 end.
 

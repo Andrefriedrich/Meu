@@ -36,7 +36,6 @@ begin
   SaveDialog.Title := 'Salvar JSON';
   SaveDialog.Filter := 'Arquivos JSON (*.json)|*.json|Todos os Arquivos (*.*)|*.*';
   SaveDialog.DefaultExt := 'json';
-
   if SaveDialog.Execute then
   begin
     if MemoJson.Lines.Count = 0 then
@@ -44,12 +43,9 @@ begin
       ShowMessage('Não há conteúdo no editor para salvar.');
       Exit;
     end;
-
     try
       MemoJson.Lines.SaveToFile(SaveDialog.FileName, TEncoding.UTF8);
-
       ShowMessage('Arquivo JSON salvo com sucesso em: ' + SaveDialog.FileName);
-
     except
       on E: Exception do
       begin
