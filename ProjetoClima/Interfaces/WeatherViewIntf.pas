@@ -1,10 +1,8 @@
 unit WeatherViewIntf;
 
 interface
-
 uses
   System.Classes, Vcl.Graphics, WeatherModel;
-
 type
   IWeatherView = interface
     function GetCidadeParaBusca: string;
@@ -17,7 +15,5 @@ type
     procedure MostrarMensagemInfo(const AMsg: string);
     procedure FocarNoCampoCidade;
   end;
-
 implementation
-
 end.

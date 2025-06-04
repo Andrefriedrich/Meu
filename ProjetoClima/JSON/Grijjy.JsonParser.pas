@@ -151,7 +151,6 @@ begin
     on E: Exception do
     begin
       FLastError := 'Erro ao fazer parse do JSON: ' + E.Message;
-      Result := nil;
     end;
   end;
 end;

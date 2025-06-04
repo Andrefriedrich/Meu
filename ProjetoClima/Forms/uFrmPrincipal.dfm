@@ -1,8 +1,8 @@
 object FormPrincipal: TFormPrincipal
   Left = 0
   Top = 0
-  ClientHeight = 353
-  ClientWidth = 661
+  ClientHeight = 357
+  ClientWidth = 747
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@ object FormPrincipal: TFormPrincipal
   end
   object edCidade: TcxTextEdit
     Left = 212
-    Top = 22
+    Top = 37
     AutoSize = False
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -36,8 +36,8 @@ object FormPrincipal: TFormPrincipal
     Width = 206
   end
   object btnBuscaComRestJson: TcxButton
-    Left = 457
-    Top = 64
+    Left = 544
+    Top = 42
     Width = 88
     Height = 25
     Caption = ' Rest.Json'
@@ -45,8 +45,8 @@ object FormPrincipal: TFormPrincipal
     OnClick = btnBuscaComRestJsonClick
   end
   object btnBuscaComGrijjy: TcxButton
-    Left = 457
-    Top = 27
+    Left = 447
+    Top = 42
     Width = 88
     Height = 25
     Caption = 'Grijjy'
@@ -55,7 +55,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbUltimaAtualizacao: TcxLabel
     Left = 24
-    Top = 146
+    Top = 175
     Caption = 'Ultima atualiza'#231#227'o de dados:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -67,7 +67,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbTemperatura: TcxLabel
     Left = 24
-    Top = 215
+    Top = 241
     Caption = 'Temperatura em '#176'C:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -91,7 +91,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbIndiceUV: TcxLabel
     Left = 24
-    Top = 246
+    Top = 272
     Caption = 'Indice UV:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -103,7 +103,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbDirecaoVento: TcxLabel
     Left = 24
-    Top = 182
+    Top = 208
     Caption = 'Dire'#231#227'o do vento:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -115,7 +115,7 @@ object FormPrincipal: TFormPrincipal
   end
   object cxLabel1: TcxLabel
     Left = 24
-    Top = 29
+    Top = 44
     Caption = 'Digite o nome da cidade:'
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
@@ -158,8 +158,8 @@ object FormPrincipal: TFormPrincipal
     Style.IsFontAssigned = True
   end
   object btnExibirJson: TcxButton
-    Left = 551
-    Top = 27
+    Left = 644
+    Top = 42
     Width = 88
     Height = 25
     Caption = 'Exibir Json'
@@ -202,7 +202,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbDataHoraDados: TcxLabel
     Left = 231
-    Top = 147
+    Top = 176
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
     Style.Font.Color = clWindowText
@@ -224,7 +224,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbVento: TcxLabel
     Left = 155
-    Top = 182
+    Top = 208
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
     Style.Font.Color = clWindowText
@@ -235,7 +235,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbUV: TcxLabel
     Left = 103
-    Top = 246
+    Top = 272
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
     Style.Font.Color = clWindowText
@@ -246,7 +246,7 @@ object FormPrincipal: TFormPrincipal
   end
   object lbTempC: TcxLabel
     Left = 170
-    Top = 215
+    Top = 241
     ParentFont = False
     Style.Font.Charset = DEFAULT_CHARSET
     Style.Font.Color = clWindowText
@@ -264,6 +264,29 @@ object FormPrincipal: TFormPrincipal
     Style.Font.Color = clWindowText
     Style.Font.Height = -21
     Style.Font.Name = 'Franklin Gothic Book'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+  end
+  object cxLabel6: TcxLabel
+    Left = 24
+    Top = 144
+    Caption = 'Regi'#227'o/estado:'
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Tahoma'
+    Style.Font.Style = []
+    Style.IsFontAssigned = True
+  end
+  object lbRegiao: TcxLabel
+    Left = 141
+    Top = 144
+    ParentFont = False
+    Style.Font.Charset = DEFAULT_CHARSET
+    Style.Font.Color = clWindowText
+    Style.Font.Height = -16
+    Style.Font.Name = 'Tahoma'
     Style.Font.Style = []
     Style.IsFontAssigned = True
   end

@@ -33,7 +33,6 @@ type
     procedure InicializarParsers;
     procedure IniciarBuscaClima(AParserType: TParserType);
     procedure ExibirJsonAtual;
-    procedure Finalizar;
   end;
 
 implementation
@@ -50,8 +49,7 @@ end;
 
 destructor TWeatherController.Destroy;
 begin
-  Finalizar;
-  inherited Destroy;
+  inherited;
 end;
 
 procedure TWeatherController.SetView(AView: IWeatherView);
@@ -63,14 +61,6 @@ procedure TWeatherController.InicializarParsers;
 begin
   FRestJsonParser   := TRestJsonParser.Create;
   FGrijjyJsonParser := TGrijjyJsonParser.Create;
-end;
-
-procedure TWeatherController.Finalizar;
-begin
-  FreeAndNil(FCurrentWeatherData);
-  FRestJsonParser   := nil;
-  FGrijjyJsonParser := nil;
-  FLastUsedParser   := nil;
 end;
 
 procedure TWeatherController.IniciarBuscaClima(AParserType: TParserType);
@@ -133,7 +123,6 @@ var
   LIniFileName: string;
 begin
   LIniFileName := TPath.Combine(TPath.GetDirectoryName(ParamStr(0)), 'config.ini');
-
   LIniFile := TIniFile.Create(LIniFileName);
   try
     FConfigApiKey    := LIniFile.ReadString('API', 'Key', '');
@@ -184,7 +173,6 @@ begin
 
       if Assigned(LParsedData) and (LParserError = '') then
       begin
-        FreeAndNil(FCurrentWeatherData);
         FCurrentWeatherData := LParsedData;
         FLastUsedParser := LParserDaThread;
 

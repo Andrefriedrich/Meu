@@ -35,6 +35,8 @@ type
     lbUV: TcxLabel;
     lbTempC: TcxLabel;
     cxLabel5: TcxLabel;
+    cxLabel6: TcxLabel;
+    lbRegiao: TcxLabel;
     procedure btnBuscaComRestJsonClick(Sender: TObject);
     procedure btnExibirJsonClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -66,19 +68,16 @@ begin
   if Assigned(FController) then
     FController.IniciarBuscaClima(ptRestJson);
 end;
-
 procedure TFormPrincipal.btnBuscaComGrijjyClick(Sender: TObject);
 begin
   if Assigned(FController) then
     FController.IniciarBuscaClima(ptGrijjyJson);
 end;
-
 procedure TFormPrincipal.btnExibirJsonClick(Sender: TObject);
 begin
   if Assigned(FController) then
     FController.ExibirJsonAtual;
 end;
-
 procedure TFormPrincipal.FormCreate(Sender: TObject);
 begin
   FController := TWeatherController.Create;
@@ -88,27 +87,19 @@ begin
   SetStatus('Pronto.');
   HabilitarBotaoExibirJson(False);
 end;
-
 procedure TFormPrincipal.FormDestroy(Sender: TObject);
 begin
-  if Assigned(FController) then
-  begin
-    FController.Finalizar;
-  end;
   FController := nil;
   inherited;
 end;
-
 function TFormPrincipal.GetCidadeParaBusca: string;
 begin
   Result := Trim(edCidade.Text);
 end;
-
 procedure TFormPrincipal.SetStatus(const AMsg: string);
 begin
   lbStatus.Caption := AMsg;
 end;
-
 procedure TFormPrincipal.ExibirDadosClima(const AWeatherData: TWeatherModel);
 begin
   if not Assigned(AWeatherData) then
@@ -117,25 +108,23 @@ begin
     SetStatus('Dados climáticos não disponíveis.');
     Exit;
   end;
-
   if Assigned(AWeatherData.Location) then
   begin
     lbDataHoraDados.Caption := AWeatherData.Location.LocalTime;
     lbPais.Caption          := AWeatherData.Location.Country;
     lbCidade.Caption        := AWeatherData.Location.Name;
+    lbRegiao.Caption       := AWeatherData.Location.Region;
   end
   else
   begin
     lbDataHoraDados.Caption := '';
     lbPais.Caption          := '';
   end;
-
   if Assigned(AWeatherData.Current) then
   begin
     lbTempC.Caption := AWeatherData.Current.TempC.ToString;
     lbVento.Caption := TUtil.GetDirecaoVentoText(AWeatherData.Current.WindDir);
     lbUV.Caption    := AWeatherData.Current.UV.ToString;
-
     if Assigned(AWeatherData.Current.Condition) then
     begin
       lbDescricaoClima.Caption := AWeatherData.Current.Condition.Text;
@@ -153,7 +142,6 @@ begin
     lbUV.Caption             := '';
   end;
 end;
-
 procedure TFormPrincipal.ExibirIconeClima(AImagem: TGraphic);
 begin
   if Assigned(AImagem) then
@@ -165,7 +153,6 @@ begin
     ImagemClima.Picture := nil;
   end;
 end;
-
 procedure TFormPrincipal.LimparExibicaoClima;
 begin
   lbDataHoraDados.Caption  := '';
@@ -176,27 +163,21 @@ begin
   lbUV.Caption             := '';
   edCidade.Text            := '';
   ImagemClima.Picture      := nil;
-
 end;
-
 procedure TFormPrincipal.HabilitarBotaoExibirJson(AEnabled: Boolean);
 begin
   btnExibirJson.Enabled := AEnabled;
 end;
-
 procedure TFormPrincipal.MostrarMensagemErro(const AMsg: string);
 begin
   MessageDlg(AMsg, mtError, [mbOK], 0);
 end;
-
 procedure TFormPrincipal.MostrarMensagemInfo(const AMsg: string);
 begin
   MessageDlg(AMsg, mtInformation, [mbOK], 0);
 end;
-
 procedure TFormPrincipal.FocarNoCampoCidade;
 begin
   edCidade.SetFocus;
 end;
-
 end.
