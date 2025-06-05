@@ -189,7 +189,8 @@ begin
       end
       else
       begin
-        if Assigned(LParsedData) then FreeAndNil(LParsedData);
+        if Assigned(LParsedData) then
+          FreeAndNil(LParsedData);
         FView.MostrarMensagemErro('Erro ao analisar os dados (' + LParserDaThread.GetParserName + '): ' + LParserError);
         FView.SetStatus('Falha ao processar resposta.');
         FreeAndNil(FCurrentWeatherData);
@@ -198,7 +199,8 @@ begin
     except
       on E: Exception do
       begin
-        if Assigned(LParsedData) then FreeAndNil(LParsedData);
+        if Assigned(LParsedData) then
+          FreeAndNil(LParsedData);
         FView.MostrarMensagemErro('Erro crítico durante análise do JSON (' + LParserDaThread.GetParserName + '): ' + E.Message);
         FView.SetStatus('Falha crítica ao processar resposta.');
         FreeAndNil(FCurrentWeatherData);
@@ -208,7 +210,7 @@ begin
   end
   else
   begin
-    FView.MostrarMensagemErro('Erro ao buscar dados da API: ' + LErrorMsg);
+    FView.MostrarMensagemErro('Erro! Cidade não encontrada: ' + LErrorMsg);
     FView.SetStatus('Falha ao buscar dados.');
     FreeAndNil(FCurrentWeatherData);
     FLastUsedParser := nil;
@@ -310,7 +312,8 @@ var
   LError: string;
   JsonEditorForm: TFrmJsonEditor;
 begin
-  if not Assigned(FView) then Exit;
+  if not Assigned(FView) then
+    Exit;
 
   if not Assigned(FCurrentWeatherData) then
   begin

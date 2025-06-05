@@ -42,6 +42,7 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure btnBuscaComGrijjyClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     FController: IWeatherController;
     function GetCidadeParaBusca: string;
@@ -78,6 +79,11 @@ begin
   if Assigned(FController) then
     FController.ExibirJsonAtual;
 end;
+procedure TFormPrincipal.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree;
+end;
+
 procedure TFormPrincipal.FormCreate(Sender: TObject);
 begin
   FController := TWeatherController.Create;

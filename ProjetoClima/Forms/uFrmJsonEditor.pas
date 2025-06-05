@@ -15,6 +15,7 @@ type
     btnSalvar: TcxButton;
     SaveDialog: TSaveDialog;
     procedure btnSalvarClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
   private
     { Private declarations }
   public
@@ -58,6 +59,11 @@ end;
 procedure TFrmJsonEditor.CarregarEExibirJson(const AJsonString: string);
 begin
   memoJson.Lines.Text := AJsonString;
+end;
+
+procedure TFrmJsonEditor.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+  Action := caFree;
 end;
 
 end.

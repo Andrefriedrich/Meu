@@ -11,6 +11,7 @@ object FrmJsonEditor: TFrmJsonEditor
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object memoJson: TcxMemo
@@ -28,6 +29,7 @@ object FrmJsonEditor: TFrmJsonEditor
     Height = 59
     Align = alClient
     TabOrder = 1
+    ExplicitTop = 543
     object btnSalvar: TcxButton
       Left = 32
       Top = 16
